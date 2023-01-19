@@ -1,0 +1,1315 @@
+2023-01-14 11:20:21,363 Namespace(cfg='.\\experiments\\mpii\\hrnet\\w32_256x256_adam_lr1e-3_ak.yaml', dataDir='', logDir='', modelDir='', opts=[], prevModelDir='')
+2023-01-14 11:20:21,363 AUTO_RESUME: True
+CUDNN:
+  BENCHMARK: True
+  DETERMINISTIC: False
+  ENABLED: True
+DATASET:
+  COLOR_RGB: True
+  DATASET: ak
+  DATA_FORMAT: jpg
+  FLIP: True
+  HYBRID_JOINTS_TYPE: 
+  IMAGE_ROOT: E:/huazhen/dataset/AnimalKingdom-PoseEstimation/dataset/
+  NUM_JOINTS_HALF_BODY: 11
+  PROB_HALF_BODY: -1.0
+  ROOT: data/ak_P2
+  ROT_FACTOR: 30
+  SCALE_FACTOR: 0.25
+  SELECT_DATA: False
+  TEST_SET: test
+  TRAIN_SET: train
+DATA_DIR: 
+DEBUG:
+  DEBUG: True
+  SAVE_BATCH_IMAGES_GT: True
+  SAVE_BATCH_IMAGES_PRED: True
+  SAVE_HEATMAPS_GT: True
+  SAVE_HEATMAPS_PRED: True
+GPUS: (0,)
+LOG_DIR: log/ak_P2
+LOSS:
+  TOPK: 8
+  USE_DIFFERENT_JOINTS_WEIGHT: False
+  USE_OHKM: False
+  USE_TARGET_WEIGHT: True
+MODEL:
+  EXTRA:
+    FINAL_CONV_KERNEL: 1
+    PRETRAINED_LAYERS: ['conv1', 'bn1', 'conv2', 'bn2', 'layer1', 'transition1', 'stage2', 'transition2', 'stage3', 'transition3', 'stage4']
+    STAGE2:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4]
+      NUM_BRANCHES: 2
+      NUM_CHANNELS: [32, 64]
+      NUM_MODULES: 1
+    STAGE3:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4]
+      NUM_BRANCHES: 3
+      NUM_CHANNELS: [32, 64, 128]
+      NUM_MODULES: 4
+    STAGE4:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4, 4]
+      NUM_BRANCHES: 4
+      NUM_CHANNELS: [32, 64, 128, 256]
+      NUM_MODULES: 3
+  HEATMAP_SIZE: [64, 64]
+  IMAGE_SIZE: [256, 256]
+  INIT_WEIGHTS: True
+  NAME: pose_hrnet
+  NUM_JOINTS: 23
+  PRETRAINED: 
+  SIGMA: 2
+  TAG_PER_JOINT: True
+  TARGET_TYPE: gaussian
+OUTPUT_DIR: output/ak_P2
+PIN_MEMORY: True
+PRINT_FREQ: 100
+RANK: 0
+TEST:
+  BATCH_SIZE_PER_GPU: 32
+  BBOX_THRE: 1.0
+  COCO_BBOX_FILE: 
+  FLIP_TEST: True
+  IMAGE_THRE: 0.1
+  IN_VIS_THRE: 0.0
+  MODEL_FILE: 
+  NMS_THRE: 0.6
+  OKS_THRE: 0.5
+  POST_PROCESS: True
+  SHIFT_HEATMAP: True
+  SOFT_NMS: False
+  USE_GT_BBOX: False
+TRAIN:
+  BATCH_SIZE_PER_GPU: 32
+  BEGIN_EPOCH: 0
+  CHECKPOINT: 
+  END_EPOCH: 150
+  GAMMA1: 0.99
+  GAMMA2: 0.0
+  LR: 0.001
+  LR_FACTOR: 0.1
+  LR_STEP: [170, 200]
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPTIMIZER: adam
+  RESUME: False
+  SHUFFLE: True
+  WD: 0.0001
+WORKERS: 4
+2023-01-14 11:20:21,788 => init weights from normal distribution
+2023-01-14 11:20:22,623 
+Total Parameters: 28,536,311
+----------------------------------------------------------------------------------------------------------------------------------
+Total Multiply Adds (For Convolution and Linear Layers only): 9.4940185546875 GFLOPs
+----------------------------------------------------------------------------------------------------------------------------------
+Number of Layers
+Conv2d : 293 layers   BatchNorm2d : 292 layers   ReLU : 261 layers   Bottleneck : 4 layers   BasicBlock : 104 layers   Upsample : 28 layers   HighResolutionModule : 8 layers   
+2023-01-14 11:20:24,156 => load 6819 samples
+2023-01-14 11:20:24,398 => load 1705 samples
+2023-01-14 11:20:45,586 Epoch: [0][0/214]	Time 21.173s (21.173s)	Speed 1.5 samples/s	Data 14.251s (14.251s)	Loss 0.00122 (0.00122)	Accuracy 0.008 (0.008)
+2023-01-14 11:22:06,300 Epoch: [0][100/214]	Time 0.785s (1.009s)	Speed 40.8 samples/s	Data 0.000s (0.161s)	Loss 0.00089 (0.00100)	Accuracy 0.014 (0.012)
+2023-01-14 11:23:28,609 Epoch: [0][200/214]	Time 0.812s (0.916s)	Speed 39.4 samples/s	Data 0.001s (0.089s)	Loss 0.00077 (0.00090)	Accuracy 0.064 (0.029)
+2023-01-14 11:23:54,091 Test: [0/54]	Time 11.992 (11.992)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:24:20,923 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:24:20,924 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:24:20,924 | pose_hrnet | 19.426 | 17.853 | 14.823 | 5.447 | 26.376 | 28.204 | 23.247 | 16.889 | 15.938 | 17.948 |
+2023-01-14 11:24:20,925 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:24:36,144 Epoch: [1][0/214]	Time 13.052s (13.052s)	Speed 2.5 samples/s	Data 11.983s (11.983s)	Loss 0.00079 (0.00079)	Accuracy 0.073 (0.073)
+2023-01-14 11:25:57,415 Epoch: [1][100/214]	Time 0.808s (0.934s)	Speed 39.6 samples/s	Data 0.000s (0.135s)	Loss 0.00081 (0.00079)	Accuracy 0.101 (0.084)
+2023-01-14 11:27:18,411 Epoch: [1][200/214]	Time 0.775s (0.872s)	Speed 41.3 samples/s	Data 0.000s (0.076s)	Loss 0.00076 (0.00079)	Accuracy 0.143 (0.095)
+2023-01-14 11:27:41,519 Test: [0/54]	Time 11.410 (11.410)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:28:07,444 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:28:07,444 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:28:07,445 | pose_hrnet | 43.754 | 23.948 | 16.686 | 11.092 | 42.547 | 41.086 | 36.502 | 40.199 | 20.953 | 32.258 |
+2023-01-14 11:28:07,446 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:28:22,310 Epoch: [2][0/214]	Time 12.658s (12.658s)	Speed 2.5 samples/s	Data 11.905s (11.905s)	Loss 0.00080 (0.00080)	Accuracy 0.124 (0.124)
+2023-01-14 11:29:41,407 Epoch: [2][100/214]	Time 0.788s (0.908s)	Speed 40.6 samples/s	Data 0.000s (0.134s)	Loss 0.00079 (0.00078)	Accuracy 0.145 (0.128)
+2023-01-14 11:31:01,285 Epoch: [2][200/214]	Time 0.784s (0.854s)	Speed 40.8 samples/s	Data 0.000s (0.075s)	Loss 0.00076 (0.00078)	Accuracy 0.158 (0.132)
+2023-01-14 11:31:24,825 Test: [0/54]	Time 11.777 (11.777)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:31:50,761 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:31:50,761 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:31:50,762 | pose_hrnet | 47.400 | 24.527 | 17.299 | 20.947 | 45.686 | 39.806 | 34.529 | 44.415 | 24.368 | 34.739 |
+2023-01-14 11:31:50,763 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:32:05,325 Epoch: [3][0/214]	Time 12.399s (12.399s)	Speed 2.6 samples/s	Data 11.663s (11.663s)	Loss 0.00084 (0.00084)	Accuracy 0.178 (0.178)
+2023-01-14 11:33:24,693 Epoch: [3][100/214]	Time 0.808s (0.909s)	Speed 39.6 samples/s	Data 0.000s (0.132s)	Loss 0.00075 (0.00077)	Accuracy 0.169 (0.152)
+2023-01-14 11:34:44,700 Epoch: [3][200/214]	Time 0.761s (0.855s)	Speed 42.1 samples/s	Data 0.001s (0.075s)	Loss 0.00073 (0.00077)	Accuracy 0.150 (0.160)
+2023-01-14 11:35:08,113 Test: [0/54]	Time 11.797 (11.797)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:35:33,929 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:35:33,930 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:35:33,930 | pose_hrnet | 51.704 | 30.688 | 21.036 | 26.561 | 50.386 | 44.660 | 43.455 | 53.967 | 27.124 | 40.501 |
+2023-01-14 11:35:33,931 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:35:48,766 Epoch: [4][0/214]	Time 12.533s (12.533s)	Speed 2.6 samples/s	Data 11.790s (11.790s)	Loss 0.00080 (0.00080)	Accuracy 0.190 (0.190)
+2023-01-14 11:37:08,219 Epoch: [4][100/214]	Time 0.763s (0.911s)	Speed 41.9 samples/s	Data 0.000s (0.134s)	Loss 0.00072 (0.00076)	Accuracy 0.154 (0.188)
+2023-01-14 11:38:28,081 Epoch: [4][200/214]	Time 0.762s (0.855s)	Speed 42.0 samples/s	Data 0.000s (0.075s)	Loss 0.00075 (0.00076)	Accuracy 0.253 (0.193)
+2023-01-14 11:38:51,364 Test: [0/54]	Time 11.607 (11.607)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:39:17,110 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:39:17,110 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:39:17,111 | pose_hrnet | 56.724 | 36.600 | 21.284 | 24.718 | 59.200 | 53.642 | 51.095 | 54.938 | 33.241 | 44.555 |
+2023-01-14 11:39:17,112 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:39:31,809 Epoch: [5][0/214]	Time 12.537s (12.537s)	Speed 2.6 samples/s	Data 11.779s (11.779s)	Loss 0.00077 (0.00077)	Accuracy 0.205 (0.205)
+2023-01-14 11:40:50,988 Epoch: [5][100/214]	Time 0.783s (0.908s)	Speed 40.9 samples/s	Data 0.000s (0.134s)	Loss 0.00077 (0.00075)	Accuracy 0.220 (0.215)
+2023-01-14 11:42:10,892 Epoch: [5][200/214]	Time 0.763s (0.854s)	Speed 41.9 samples/s	Data 0.000s (0.076s)	Loss 0.00074 (0.00074)	Accuracy 0.217 (0.223)
+2023-01-14 11:42:34,166 Test: [0/54]	Time 11.629 (11.629)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:42:59,905 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:42:59,905 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:42:59,906 | pose_hrnet | 56.605 | 41.182 | 26.830 | 31.682 | 56.305 | 51.652 | 47.244 | 59.700 | 37.442 | 47.184 |
+2023-01-14 11:42:59,907 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:43:14,894 Epoch: [6][0/214]	Time 12.689s (12.689s)	Speed 2.5 samples/s	Data 11.947s (11.947s)	Loss 0.00073 (0.00073)	Accuracy 0.229 (0.229)
+2023-01-14 11:44:34,130 Epoch: [6][100/214]	Time 0.777s (0.910s)	Speed 41.2 samples/s	Data 0.001s (0.135s)	Loss 0.00075 (0.00073)	Accuracy 0.259 (0.238)
+2023-01-14 11:45:54,122 Epoch: [6][200/214]	Time 0.783s (0.855s)	Speed 40.9 samples/s	Data 0.001s (0.076s)	Loss 0.00073 (0.00072)	Accuracy 0.302 (0.248)
+2023-01-14 11:46:17,247 Test: [0/54]	Time 11.287 (11.287)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:46:43,241 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:46:43,241 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:46:43,242 | pose_hrnet | 60.849 | 39.602 | 27.943 | 32.641 | 58.964 | 55.083 | 51.775 | 60.830 | 43.421 | 49.577 |
+2023-01-14 11:46:43,244 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:46:57,926 Epoch: [7][0/214]	Time 12.485s (12.485s)	Speed 2.6 samples/s	Data 11.746s (11.746s)	Loss 0.00071 (0.00071)	Accuracy 0.197 (0.197)
+2023-01-14 11:48:16,936 Epoch: [7][100/214]	Time 0.778s (0.906s)	Speed 41.1 samples/s	Data 0.000s (0.133s)	Loss 0.00067 (0.00072)	Accuracy 0.306 (0.261)
+2023-01-14 11:49:36,738 Epoch: [7][200/214]	Time 0.793s (0.852s)	Speed 40.4 samples/s	Data 0.001s (0.075s)	Loss 0.00070 (0.00071)	Accuracy 0.301 (0.277)
+2023-01-14 11:50:00,068 Test: [0/54]	Time 11.753 (11.753)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:50:25,844 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:50:25,844 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:50:25,844 | pose_hrnet | 62.343 | 47.968 | 30.888 | 38.310 | 65.725 | 58.589 | 53.067 | 67.027 | 47.157 | 54.468 |
+2023-01-14 11:50:25,846 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:50:40,480 Epoch: [8][0/214]	Time 12.426s (12.426s)	Speed 2.6 samples/s	Data 11.675s (11.675s)	Loss 0.00072 (0.00072)	Accuracy 0.254 (0.254)
+2023-01-14 11:51:59,388 Epoch: [8][100/214]	Time 0.804s (0.904s)	Speed 39.8 samples/s	Data 0.001s (0.133s)	Loss 0.00074 (0.00070)	Accuracy 0.303 (0.303)
+2023-01-14 11:53:19,320 Epoch: [8][200/214]	Time 0.775s (0.852s)	Speed 41.3 samples/s	Data 0.000s (0.075s)	Loss 0.00064 (0.00069)	Accuracy 0.349 (0.314)
+2023-01-14 11:53:42,517 Test: [0/54]	Time 11.677 (11.677)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:54:08,292 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:54:08,293 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:54:08,293 | pose_hrnet | 66.766 | 53.121 | 34.589 | 47.740 | 69.764 | 62.818 | 57.174 | 71.258 | 55.361 | 59.888 |
+2023-01-14 11:54:08,295 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:54:22,912 Epoch: [9][0/214]	Time 12.411s (12.411s)	Speed 2.6 samples/s	Data 11.692s (11.692s)	Loss 0.00068 (0.00068)	Accuracy 0.412 (0.412)
+2023-01-14 11:55:41,952 Epoch: [9][100/214]	Time 0.796s (0.905s)	Speed 40.2 samples/s	Data 0.000s (0.132s)	Loss 0.00073 (0.00068)	Accuracy 0.319 (0.342)
+2023-01-14 11:57:01,612 Epoch: [9][200/214]	Time 0.773s (0.851s)	Speed 41.4 samples/s	Data 0.000s (0.074s)	Loss 0.00066 (0.00067)	Accuracy 0.416 (0.352)
+2023-01-14 11:57:24,812 Test: [0/54]	Time 11.606 (11.606)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 11:57:50,590 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 11:57:50,591 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 11:57:50,591 | pose_hrnet | 71.070 | 56.649 | 41.437 | 48.552 | 73.265 | 67.464 | 61.329 | 72.933 | 57.668 | 63.081 |
+2023-01-14 11:57:50,592 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 11:58:04,974 Epoch: [10][0/214]	Time 12.218s (12.218s)	Speed 2.6 samples/s	Data 11.461s (11.461s)	Loss 0.00061 (0.00061)	Accuracy 0.471 (0.471)
+2023-01-14 11:59:23,884 Epoch: [10][100/214]	Time 0.807s (0.902s)	Speed 39.7 samples/s	Data 0.000s (0.130s)	Loss 0.00058 (0.00066)	Accuracy 0.380 (0.370)
+2023-01-14 12:00:43,106 Epoch: [10][200/214]	Time 0.775s (0.848s)	Speed 41.3 samples/s	Data 0.000s (0.074s)	Loss 0.00058 (0.00065)	Accuracy 0.411 (0.383)
+2023-01-14 12:01:06,432 Test: [0/54]	Time 11.620 (11.620)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:01:32,112 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:01:32,112 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:01:32,113 | pose_hrnet | 72.564 | 59.812 | 44.249 | 49.970 | 72.358 | 68.422 | 62.246 | 76.239 | 61.290 | 65.349 |
+2023-01-14 12:01:32,114 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:01:46,837 Epoch: [11][0/214]	Time 12.506s (12.506s)	Speed 2.6 samples/s	Data 11.737s (11.737s)	Loss 0.00069 (0.00069)	Accuracy 0.366 (0.366)
+2023-01-14 12:03:05,748 Epoch: [11][100/214]	Time 0.794s (0.905s)	Speed 40.3 samples/s	Data 0.000s (0.133s)	Loss 0.00063 (0.00064)	Accuracy 0.419 (0.395)
+2023-01-14 12:04:25,621 Epoch: [11][200/214]	Time 0.785s (0.852s)	Speed 40.8 samples/s	Data 0.000s (0.075s)	Loss 0.00063 (0.00063)	Accuracy 0.428 (0.404)
+2023-01-14 12:04:49,027 Test: [0/54]	Time 11.694 (11.694)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:05:14,657 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:05:14,658 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:05:14,658 | pose_hrnet | 60.669 | 49.564 | 39.776 | 42.469 | 63.907 | 58.681 | 57.307 | 64.227 | 52.801 | 55.825 |
+2023-01-14 12:05:14,659 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:05:29,024 Epoch: [12][0/214]	Time 12.777s (12.777s)	Speed 2.5 samples/s	Data 12.036s (12.036s)	Loss 0.00059 (0.00059)	Accuracy 0.408 (0.408)
+2023-01-14 12:06:48,205 Epoch: [12][100/214]	Time 0.778s (0.910s)	Speed 41.1 samples/s	Data 0.001s (0.136s)	Loss 0.00058 (0.00062)	Accuracy 0.393 (0.426)
+2023-01-14 12:08:08,066 Epoch: [12][200/214]	Time 0.784s (0.855s)	Speed 40.8 samples/s	Data 0.000s (0.076s)	Loss 0.00063 (0.00062)	Accuracy 0.371 (0.431)
+2023-01-14 12:08:31,308 Test: [0/54]	Time 11.671 (11.671)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:08:56,917 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:08:56,918 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:08:56,918 | pose_hrnet | 76.868 | 64.712 | 50.210 | 55.106 | 76.702 | 72.625 | 64.446 | 78.739 | 66.087 | 69.158 |
+2023-01-14 12:08:56,920 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:09:11,574 Epoch: [13][0/214]	Time 12.475s (12.475s)	Speed 2.6 samples/s	Data 11.734s (11.734s)	Loss 0.00060 (0.00060)	Accuracy 0.417 (0.417)
+2023-01-14 12:10:30,709 Epoch: [13][100/214]	Time 0.777s (0.907s)	Speed 41.2 samples/s	Data 0.001s (0.133s)	Loss 0.00060 (0.00061)	Accuracy 0.422 (0.443)
+2023-01-14 12:11:50,137 Epoch: [13][200/214]	Time 0.786s (0.851s)	Speed 40.7 samples/s	Data 0.000s (0.075s)	Loss 0.00058 (0.00060)	Accuracy 0.398 (0.452)
+2023-01-14 12:12:13,589 Test: [0/54]	Time 11.824 (11.824)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:12:39,365 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:12:39,365 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:12:39,365 | pose_hrnet | 75.672 | 66.087 | 50.537 | 56.537 | 79.054 | 72.441 | 66.857 | 79.418 | 66.189 | 69.880 |
+2023-01-14 12:12:39,367 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:12:53,988 Epoch: [14][0/214]	Time 12.354s (12.354s)	Speed 2.6 samples/s	Data 11.626s (11.626s)	Loss 0.00048 (0.00048)	Accuracy 0.506 (0.506)
+2023-01-14 12:14:13,101 Epoch: [14][100/214]	Time 0.808s (0.906s)	Speed 39.6 samples/s	Data 0.000s (0.132s)	Loss 0.00058 (0.00059)	Accuracy 0.533 (0.467)
+2023-01-14 12:15:33,259 Epoch: [14][200/214]	Time 0.794s (0.854s)	Speed 40.3 samples/s	Data 0.000s (0.075s)	Loss 0.00057 (0.00059)	Accuracy 0.552 (0.470)
+2023-01-14 12:15:56,543 Test: [0/54]	Time 11.705 (11.705)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:16:22,167 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:16:22,168 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:16:22,168 | pose_hrnet | 64.973 | 54.889 | 41.904 | 51.061 | 64.390 | 60.846 | 59.508 | 68.226 | 58.012 | 59.703 |
+2023-01-14 12:16:22,169 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:16:36,527 Epoch: [15][0/214]	Time 12.663s (12.663s)	Speed 2.5 samples/s	Data 11.921s (11.921s)	Loss 0.00050 (0.00050)	Accuracy 0.537 (0.537)
+2023-01-14 12:17:55,617 Epoch: [15][100/214]	Time 0.778s (0.908s)	Speed 41.1 samples/s	Data 0.000s (0.134s)	Loss 0.00055 (0.00058)	Accuracy 0.566 (0.476)
+2023-01-14 12:19:15,595 Epoch: [15][200/214]	Time 0.774s (0.854s)	Speed 41.3 samples/s	Data 0.000s (0.075s)	Loss 0.00052 (0.00058)	Accuracy 0.496 (0.484)
+2023-01-14 12:19:38,824 Test: [0/54]	Time 11.427 (11.427)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:20:04,395 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:20:04,396 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:20:04,396 | pose_hrnet | 78.004 | 69.709 | 56.197 | 60.200 | 80.206 | 75.935 | 69.890 | 83.918 | 69.388 | 73.476 |
+2023-01-14 12:20:04,397 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:20:19,068 Epoch: [16][0/214]	Time 12.545s (12.545s)	Speed 2.6 samples/s	Data 11.793s (11.793s)	Loss 0.00054 (0.00054)	Accuracy 0.517 (0.517)
+2023-01-14 12:21:38,124 Epoch: [16][100/214]	Time 0.775s (0.907s)	Speed 41.3 samples/s	Data 0.001s (0.132s)	Loss 0.00062 (0.00058)	Accuracy 0.499 (0.488)
+2023-01-14 12:22:57,685 Epoch: [16][200/214]	Time 0.779s (0.852s)	Speed 41.1 samples/s	Data 0.000s (0.074s)	Loss 0.00067 (0.00057)	Accuracy 0.404 (0.499)
+2023-01-14 12:23:20,778 Test: [0/54]	Time 11.454 (11.454)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:23:46,494 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:23:46,494 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:23:46,495 | pose_hrnet | 79.199 | 70.086 | 55.834 | 59.843 | 79.118 | 77.072 | 68.974 | 82.969 | 69.082 | 73.323 |
+2023-01-14 12:23:46,496 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:24:00,338 Epoch: [17][0/214]	Time 12.205s (12.205s)	Speed 2.6 samples/s	Data 11.469s (11.469s)	Loss 0.00053 (0.00053)	Accuracy 0.582 (0.582)
+2023-01-14 12:25:18,925 Epoch: [17][100/214]	Time 0.766s (0.899s)	Speed 41.8 samples/s	Data 0.000s (0.128s)	Loss 0.00060 (0.00057)	Accuracy 0.450 (0.506)
+2023-01-14 12:26:38,705 Epoch: [17][200/214]	Time 0.788s (0.849s)	Speed 40.6 samples/s	Data 0.001s (0.072s)	Loss 0.00060 (0.00056)	Accuracy 0.504 (0.516)
+2023-01-14 12:27:01,721 Test: [0/54]	Time 11.492 (11.492)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:27:27,392 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:27:27,393 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:27:27,393 | pose_hrnet | 81.231 | 71.810 | 57.314 | 58.253 | 81.471 | 76.956 | 68.434 | 85.461 | 70.289 | 74.814 |
+2023-01-14 12:27:27,395 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:27:41,774 Epoch: [18][0/214]	Time 12.252s (12.252s)	Speed 2.6 samples/s	Data 11.504s (11.504s)	Loss 0.00054 (0.00054)	Accuracy 0.469 (0.469)
+2023-01-14 12:29:00,561 Epoch: [18][100/214]	Time 0.777s (0.901s)	Speed 41.2 samples/s	Data 0.000s (0.131s)	Loss 0.00055 (0.00055)	Accuracy 0.482 (0.530)
+2023-01-14 12:30:19,858 Epoch: [18][200/214]	Time 0.759s (0.847s)	Speed 42.2 samples/s	Data 0.001s (0.073s)	Loss 0.00055 (0.00054)	Accuracy 0.539 (0.539)
+2023-01-14 12:30:43,154 Test: [0/54]	Time 11.618 (11.618)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:31:08,724 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:31:08,725 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:31:08,726 | pose_hrnet | 78.601 | 70.092 | 55.838 | 60.054 | 81.289 | 73.575 | 71.839 | 83.104 | 69.425 | 73.564 |
+2023-01-14 12:31:08,727 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:31:22,799 Epoch: [19][0/214]	Time 12.462s (12.462s)	Speed 2.6 samples/s	Data 11.728s (11.728s)	Loss 0.00056 (0.00056)	Accuracy 0.561 (0.561)
+2023-01-14 12:32:41,488 Epoch: [19][100/214]	Time 0.772s (0.902s)	Speed 41.5 samples/s	Data 0.000s (0.132s)	Loss 0.00061 (0.00054)	Accuracy 0.536 (0.544)
+2023-01-14 12:34:01,172 Epoch: [19][200/214]	Time 0.760s (0.850s)	Speed 42.1 samples/s	Data 0.000s (0.074s)	Loss 0.00049 (0.00053)	Accuracy 0.585 (0.550)
+2023-01-14 12:34:24,280 Test: [0/54]	Time 11.495 (11.495)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:34:49,883 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:34:49,884 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:34:49,884 | pose_hrnet | 82.606 | 69.863 | 57.486 | 61.016 | 81.592 | 78.222 | 73.056 | 85.943 | 72.770 | 75.864 |
+2023-01-14 12:34:49,886 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:35:04,370 Epoch: [20][0/214]	Time 12.222s (12.222s)	Speed 2.6 samples/s	Data 11.488s (11.488s)	Loss 0.00053 (0.00053)	Accuracy 0.502 (0.502)
+2023-01-14 12:36:23,211 Epoch: [20][100/214]	Time 0.770s (0.902s)	Speed 41.6 samples/s	Data 0.000s (0.129s)	Loss 0.00051 (0.00053)	Accuracy 0.528 (0.557)
+2023-01-14 12:37:42,743 Epoch: [20][200/214]	Time 0.783s (0.849s)	Speed 40.9 samples/s	Data 0.000s (0.073s)	Loss 0.00055 (0.00053)	Accuracy 0.612 (0.556)
+2023-01-14 12:38:05,556 Test: [0/54]	Time 11.079 (11.079)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:38:31,218 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:38:31,218 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:38:31,219 | pose_hrnet | 82.068 | 74.544 | 58.981 | 61.107 | 84.609 | 80.138 | 75.468 | 86.310 | 72.797 | 76.929 |
+2023-01-14 12:38:31,221 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:38:45,732 Epoch: [21][0/214]	Time 12.301s (12.301s)	Speed 2.6 samples/s	Data 11.571s (11.571s)	Loss 0.00049 (0.00049)	Accuracy 0.594 (0.594)
+2023-01-14 12:40:04,620 Epoch: [21][100/214]	Time 0.758s (0.903s)	Speed 42.2 samples/s	Data 0.000s (0.130s)	Loss 0.00046 (0.00052)	Accuracy 0.605 (0.570)
+2023-01-14 12:41:24,108 Epoch: [21][200/214]	Time 0.775s (0.849s)	Speed 41.3 samples/s	Data 0.001s (0.073s)	Loss 0.00052 (0.00052)	Accuracy 0.555 (0.573)
+2023-01-14 12:41:47,515 Test: [0/54]	Time 11.639 (11.639)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:42:13,123 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:42:13,123 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:42:13,124 | pose_hrnet | 79.617 | 74.281 | 58.873 | 63.565 | 81.893 | 78.219 | 73.281 | 84.931 | 73.401 | 76.193 |
+2023-01-14 12:42:13,126 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:42:27,067 Epoch: [22][0/214]	Time 12.364s (12.364s)	Speed 2.6 samples/s	Data 11.618s (11.618s)	Loss 0.00052 (0.00052)	Accuracy 0.553 (0.553)
+2023-01-14 12:43:45,736 Epoch: [22][100/214]	Time 0.776s (0.901s)	Speed 41.2 samples/s	Data 0.000s (0.130s)	Loss 0.00047 (0.00051)	Accuracy 0.632 (0.580)
+2023-01-14 12:45:05,125 Epoch: [22][200/214]	Time 0.805s (0.848s)	Speed 39.7 samples/s	Data 0.000s (0.073s)	Loss 0.00049 (0.00051)	Accuracy 0.603 (0.586)
+2023-01-14 12:45:27,966 Test: [0/54]	Time 11.214 (11.214)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:45:53,594 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:45:53,595 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:45:53,595 | pose_hrnet | 82.008 | 74.142 | 61.551 | 62.142 | 84.006 | 80.259 | 76.921 | 87.128 | 74.799 | 77.887 |
+2023-01-14 12:45:53,596 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:46:07,895 Epoch: [23][0/214]	Time 12.101s (12.101s)	Speed 2.6 samples/s	Data 11.361s (11.361s)	Loss 0.00049 (0.00049)	Accuracy 0.641 (0.641)
+2023-01-14 12:47:26,915 Epoch: [23][100/214]	Time 0.788s (0.902s)	Speed 40.6 samples/s	Data 0.000s (0.128s)	Loss 0.00051 (0.00050)	Accuracy 0.595 (0.600)
+2023-01-14 12:48:46,562 Epoch: [23][200/214]	Time 0.790s (0.850s)	Speed 40.5 samples/s	Data 0.000s (0.072s)	Loss 0.00047 (0.00050)	Accuracy 0.623 (0.601)
+2023-01-14 12:49:09,547 Test: [0/54]	Time 11.375 (11.375)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:49:35,208 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:49:35,208 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:49:35,209 | pose_hrnet | 79.199 | 71.879 | 59.714 | 64.008 | 81.650 | 77.594 | 75.249 | 83.374 | 71.773 | 75.244 |
+2023-01-14 12:49:35,211 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:49:49,261 Epoch: [24][0/214]	Time 12.335s (12.335s)	Speed 2.6 samples/s	Data 11.606s (11.606s)	Loss 0.00044 (0.00044)	Accuracy 0.669 (0.669)
+2023-01-14 12:51:08,081 Epoch: [24][100/214]	Time 0.809s (0.903s)	Speed 39.6 samples/s	Data 0.001s (0.130s)	Loss 0.00049 (0.00049)	Accuracy 0.574 (0.617)
+2023-01-14 12:52:27,592 Epoch: [24][200/214]	Time 0.776s (0.849s)	Speed 41.2 samples/s	Data 0.000s (0.073s)	Loss 0.00050 (0.00049)	Accuracy 0.626 (0.613)
+2023-01-14 12:52:50,834 Test: [0/54]	Time 11.584 (11.584)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:53:16,429 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:53:16,430 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:53:16,430 | pose_hrnet | 71.548 | 63.251 | 49.428 | 51.705 | 73.505 | 68.855 | 66.695 | 74.883 | 60.462 | 65.951 |
+2023-01-14 12:53:16,432 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:53:30,258 Epoch: [25][0/214]	Time 12.253s (12.253s)	Speed 2.6 samples/s	Data 11.528s (11.528s)	Loss 0.00051 (0.00051)	Accuracy 0.625 (0.625)
+2023-01-14 12:54:49,554 Epoch: [25][100/214]	Time 0.784s (0.906s)	Speed 40.8 samples/s	Data 0.001s (0.129s)	Loss 0.00055 (0.00056)	Accuracy 0.602 (0.527)
+2023-01-14 12:56:09,507 Epoch: [25][200/214]	Time 0.807s (0.853s)	Speed 39.7 samples/s	Data 0.000s (0.073s)	Loss 0.00053 (0.00053)	Accuracy 0.532 (0.561)
+2023-01-14 12:56:32,597 Test: [0/54]	Time 11.438 (11.438)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 12:56:58,215 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 12:56:58,215 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 12:56:58,216 | pose_hrnet | 83.025 | 76.474 | 62.237 | 64.577 | 83.946 | 79.495 | 78.137 | 88.910 | 75.778 | 78.900 |
+2023-01-14 12:56:58,218 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 12:57:12,689 Epoch: [26][0/214]	Time 12.233s (12.233s)	Speed 2.6 samples/s	Data 11.499s (11.499s)	Loss 0.00054 (0.00054)	Accuracy 0.530 (0.530)
+2023-01-14 12:58:31,126 Epoch: [26][100/214]	Time 0.797s (0.898s)	Speed 40.2 samples/s	Data 0.000s (0.130s)	Loss 0.00049 (0.00050)	Accuracy 0.634 (0.592)
+2023-01-14 12:59:50,728 Epoch: [26][200/214]	Time 0.761s (0.847s)	Speed 42.0 samples/s	Data 0.001s (0.073s)	Loss 0.00050 (0.00050)	Accuracy 0.597 (0.605)
+2023-01-14 13:00:13,571 Test: [0/54]	Time 11.341 (11.341)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:00:39,207 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:00:39,208 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:00:39,208 | pose_hrnet | 84.758 | 78.507 | 64.208 | 65.811 | 85.695 | 81.030 | 78.289 | 88.966 | 77.603 | 80.469 |
+2023-01-14 13:00:39,210 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:00:53,723 Epoch: [27][0/214]	Time 12.307s (12.307s)	Speed 2.6 samples/s	Data 11.572s (11.572s)	Loss 0.00047 (0.00047)	Accuracy 0.583 (0.583)
+2023-01-14 13:02:12,605 Epoch: [27][100/214]	Time 0.788s (0.903s)	Speed 40.6 samples/s	Data 0.000s (0.130s)	Loss 0.00048 (0.00048)	Accuracy 0.620 (0.628)
+2023-01-14 13:03:32,372 Epoch: [27][200/214]	Time 0.784s (0.851s)	Speed 40.8 samples/s	Data 0.000s (0.074s)	Loss 0.00046 (0.00047)	Accuracy 0.638 (0.632)
+2023-01-14 13:03:55,677 Test: [0/54]	Time 11.554 (11.554)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:04:21,358 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:04:21,359 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:04:21,359 | pose_hrnet | 84.877 | 78.838 | 64.331 | 68.578 | 86.359 | 82.108 | 77.905 | 90.319 | 78.723 | 81.219 |
+2023-01-14 13:04:21,362 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:04:35,998 Epoch: [28][0/214]	Time 12.485s (12.485s)	Speed 2.6 samples/s	Data 11.724s (11.724s)	Loss 0.00047 (0.00047)	Accuracy 0.658 (0.658)
+2023-01-14 13:05:54,599 Epoch: [28][100/214]	Time 0.808s (0.902s)	Speed 39.6 samples/s	Data 0.000s (0.132s)	Loss 0.00044 (0.00047)	Accuracy 0.662 (0.640)
+2023-01-14 13:07:14,366 Epoch: [28][200/214]	Time 0.778s (0.850s)	Speed 41.1 samples/s	Data 0.000s (0.074s)	Loss 0.00042 (0.00047)	Accuracy 0.711 (0.641)
+2023-01-14 13:07:37,458 Test: [0/54]	Time 11.456 (11.456)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:08:03,056 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:08:03,057 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:08:03,058 | pose_hrnet | 83.981 | 77.537 | 64.836 | 66.821 | 85.696 | 82.171 | 77.905 | 88.505 | 76.967 | 79.974 |
+2023-01-14 13:08:03,060 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:08:17,280 Epoch: [29][0/214]	Time 12.516s (12.516s)	Speed 2.6 samples/s	Data 11.776s (11.776s)	Loss 0.00044 (0.00044)	Accuracy 0.681 (0.681)
+2023-01-14 13:09:35,758 Epoch: [29][100/214]	Time 0.760s (0.901s)	Speed 42.1 samples/s	Data 0.000s (0.132s)	Loss 0.00037 (0.00046)	Accuracy 0.701 (0.646)
+2023-01-14 13:10:54,960 Epoch: [29][200/214]	Time 0.780s (0.847s)	Speed 41.0 samples/s	Data 0.000s (0.074s)	Loss 0.00048 (0.00046)	Accuracy 0.626 (0.650)
+2023-01-14 13:11:17,896 Test: [0/54]	Time 11.308 (11.308)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:11:43,577 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:11:43,578 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:11:43,578 | pose_hrnet | 85.176 | 80.048 | 65.881 | 67.874 | 84.972 | 83.444 | 78.967 | 88.713 | 77.714 | 80.904 |
+2023-01-14 13:11:43,581 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:11:57,750 Epoch: [30][0/214]	Time 12.492s (12.492s)	Speed 2.6 samples/s	Data 11.765s (11.765s)	Loss 0.00044 (0.00044)	Accuracy 0.692 (0.692)
+2023-01-14 13:13:16,223 Epoch: [30][100/214]	Time 0.792s (0.901s)	Speed 40.4 samples/s	Data 0.000s (0.132s)	Loss 0.00044 (0.00047)	Accuracy 0.679 (0.628)
+2023-01-14 13:14:35,653 Epoch: [30][200/214]	Time 0.786s (0.848s)	Speed 40.7 samples/s	Data 0.001s (0.075s)	Loss 0.00044 (0.00046)	Accuracy 0.653 (0.645)
+2023-01-14 13:14:58,854 Test: [0/54]	Time 11.499 (11.499)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:15:24,490 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:15:24,491 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:15:24,491 | pose_hrnet | 84.937 | 78.528 | 66.051 | 66.439 | 85.636 | 81.085 | 78.366 | 88.247 | 76.943 | 80.173 |
+2023-01-14 13:15:24,494 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:15:38,850 Epoch: [31][0/214]	Time 12.604s (12.604s)	Speed 2.5 samples/s	Data 11.852s (11.852s)	Loss 0.00053 (0.00053)	Accuracy 0.594 (0.594)
+2023-01-14 13:16:57,602 Epoch: [31][100/214]	Time 0.784s (0.904s)	Speed 40.8 samples/s	Data 0.000s (0.134s)	Loss 0.00051 (0.00045)	Accuracy 0.647 (0.660)
+2023-01-14 13:18:17,179 Epoch: [31][200/214]	Time 0.781s (0.850s)	Speed 41.0 samples/s	Data 0.000s (0.075s)	Loss 0.00048 (0.00044)	Accuracy 0.594 (0.669)
+2023-01-14 13:18:40,302 Test: [0/54]	Time 11.461 (11.461)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:19:05,953 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:19:05,954 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:19:05,954 | pose_hrnet | 83.383 | 78.930 | 66.863 | 67.299 | 84.791 | 80.257 | 78.588 | 88.230 | 76.894 | 80.247 |
+2023-01-14 13:19:05,956 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:19:19,827 Epoch: [32][0/214]	Time 12.275s (12.275s)	Speed 2.6 samples/s	Data 11.543s (11.543s)	Loss 0.00045 (0.00045)	Accuracy 0.648 (0.648)
+2023-01-14 13:20:38,328 Epoch: [32][100/214]	Time 0.776s (0.899s)	Speed 41.2 samples/s	Data 0.000s (0.130s)	Loss 0.00042 (0.00044)	Accuracy 0.691 (0.671)
+2023-01-14 13:21:57,951 Epoch: [32][200/214]	Time 0.809s (0.848s)	Speed 39.6 samples/s	Data 0.000s (0.074s)	Loss 0.00041 (0.00044)	Accuracy 0.692 (0.677)
+2023-01-14 13:22:21,061 Test: [0/54]	Time 11.452 (11.452)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:22:46,597 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:22:46,598 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:22:46,598 | pose_hrnet | 86.730 | 80.598 | 69.087 | 68.637 | 87.207 | 84.906 | 80.782 | 90.164 | 80.405 | 82.677 |
+2023-01-14 13:22:46,600 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:23:00,902 Epoch: [33][0/214]	Time 12.051s (12.051s)	Speed 2.7 samples/s	Data 11.302s (11.302s)	Loss 0.00040 (0.00040)	Accuracy 0.731 (0.731)
+2023-01-14 13:24:19,877 Epoch: [33][100/214]	Time 0.806s (0.901s)	Speed 39.7 samples/s	Data 0.000s (0.128s)	Loss 0.00044 (0.00045)	Accuracy 0.645 (0.674)
+2023-01-14 13:25:39,057 Epoch: [33][200/214]	Time 0.808s (0.847s)	Speed 39.6 samples/s	Data 0.000s (0.072s)	Loss 0.00043 (0.00043)	Accuracy 0.663 (0.681)
+2023-01-14 13:26:02,181 Test: [0/54]	Time 11.398 (11.398)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:26:27,834 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:26:27,835 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:26:27,835 | pose_hrnet | 87.029 | 80.982 | 67.791 | 70.292 | 88.775 | 85.096 | 81.463 | 91.212 | 80.407 | 83.205 |
+2023-01-14 13:26:27,837 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:26:42,180 Epoch: [34][0/214]	Time 12.139s (12.139s)	Speed 2.6 samples/s	Data 11.405s (11.405s)	Loss 0.00042 (0.00042)	Accuracy 0.687 (0.687)
+2023-01-14 13:28:00,859 Epoch: [34][100/214]	Time 0.771s (0.899s)	Speed 41.5 samples/s	Data 0.000s (0.128s)	Loss 0.00043 (0.00043)	Accuracy 0.671 (0.693)
+2023-01-14 13:29:20,274 Epoch: [34][200/214]	Time 0.778s (0.847s)	Speed 41.1 samples/s	Data 0.001s (0.072s)	Loss 0.00040 (0.00042)	Accuracy 0.701 (0.695)
+2023-01-14 13:29:43,454 Test: [0/54]	Time 11.528 (11.528)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:30:09,082 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:30:09,083 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:30:09,083 | pose_hrnet | 85.296 | 79.156 | 68.832 | 67.225 | 87.688 | 82.679 | 79.419 | 88.395 | 79.196 | 81.339 |
+2023-01-14 13:30:09,084 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:30:23,262 Epoch: [35][0/214]	Time 12.551s (12.551s)	Speed 2.5 samples/s	Data 11.812s (11.812s)	Loss 0.00039 (0.00039)	Accuracy 0.727 (0.727)
+2023-01-14 13:31:41,768 Epoch: [35][100/214]	Time 0.794s (0.902s)	Speed 40.3 samples/s	Data 0.000s (0.132s)	Loss 0.00050 (0.00043)	Accuracy 0.625 (0.693)
+2023-01-14 13:33:01,398 Epoch: [35][200/214]	Time 0.776s (0.849s)	Speed 41.2 samples/s	Data 0.001s (0.075s)	Loss 0.00042 (0.00042)	Accuracy 0.711 (0.699)
+2023-01-14 13:33:24,078 Test: [0/54]	Time 11.008 (11.008)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:33:49,635 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:33:49,635 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:33:49,636 | pose_hrnet | 87.926 | 80.758 | 68.088 | 71.120 | 89.500 | 84.401 | 83.200 | 89.922 | 80.585 | 83.144 |
+2023-01-14 13:33:49,637 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:34:03,356 Epoch: [36][0/214]	Time 12.172s (12.172s)	Speed 2.6 samples/s	Data 11.438s (11.438s)	Loss 0.00035 (0.00035)	Accuracy 0.755 (0.755)
+2023-01-14 13:35:21,936 Epoch: [36][100/214]	Time 0.787s (0.899s)	Speed 40.7 samples/s	Data 0.000s (0.129s)	Loss 0.00038 (0.00041)	Accuracy 0.751 (0.709)
+2023-01-14 13:36:41,333 Epoch: [36][200/214]	Time 0.775s (0.847s)	Speed 41.3 samples/s	Data 0.000s (0.072s)	Loss 0.00039 (0.00041)	Accuracy 0.685 (0.709)
+2023-01-14 13:37:04,514 Test: [0/54]	Time 11.513 (11.513)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:37:30,121 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:37:30,121 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:37:30,122 | pose_hrnet | 87.507 | 81.339 | 68.949 | 70.736 | 88.411 | 85.986 | 81.461 | 92.465 | 81.419 | 83.973 |
+2023-01-14 13:37:30,123 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:37:44,520 Epoch: [37][0/214]	Time 12.229s (12.229s)	Speed 2.6 samples/s	Data 11.481s (11.481s)	Loss 0.00046 (0.00046)	Accuracy 0.718 (0.718)
+2023-01-14 13:39:03,217 Epoch: [37][100/214]	Time 0.787s (0.900s)	Speed 40.7 samples/s	Data 0.000s (0.130s)	Loss 0.00050 (0.00044)	Accuracy 0.621 (0.678)
+2023-01-14 13:40:22,728 Epoch: [37][200/214]	Time 0.778s (0.848s)	Speed 41.1 samples/s	Data 0.000s (0.073s)	Loss 0.00040 (0.00042)	Accuracy 0.751 (0.698)
+2023-01-14 13:40:45,821 Test: [0/54]	Time 11.378 (11.378)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:41:11,473 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:41:11,474 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:41:11,474 | pose_hrnet | 87.747 | 83.167 | 70.556 | 73.359 | 89.437 | 85.737 | 83.735 | 92.503 | 82.273 | 84.750 |
+2023-01-14 13:41:11,477 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:41:25,982 Epoch: [38][0/214]	Time 12.298s (12.298s)	Speed 2.6 samples/s	Data 11.570s (11.570s)	Loss 0.00040 (0.00040)	Accuracy 0.719 (0.719)
+2023-01-14 13:42:44,645 Epoch: [38][100/214]	Time 0.795s (0.901s)	Speed 40.3 samples/s	Data 0.000s (0.130s)	Loss 0.00037 (0.00040)	Accuracy 0.709 (0.724)
+2023-01-14 13:44:04,156 Epoch: [38][200/214]	Time 0.796s (0.848s)	Speed 40.2 samples/s	Data 0.001s (0.073s)	Loss 0.00045 (0.00040)	Accuracy 0.739 (0.722)
+2023-01-14 13:44:27,222 Test: [0/54]	Time 11.486 (11.486)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:44:52,810 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:44:52,811 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:44:52,811 | pose_hrnet | 86.910 | 82.033 | 70.439 | 70.178 | 89.319 | 86.370 | 83.057 | 90.681 | 82.046 | 83.862 |
+2023-01-14 13:44:52,813 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:45:06,725 Epoch: [39][0/214]	Time 12.227s (12.227s)	Speed 2.6 samples/s	Data 11.475s (11.475s)	Loss 0.00042 (0.00042)	Accuracy 0.631 (0.631)
+2023-01-14 13:46:25,047 Epoch: [39][100/214]	Time 0.781s (0.897s)	Speed 41.0 samples/s	Data 0.000s (0.129s)	Loss 0.00047 (0.00040)	Accuracy 0.712 (0.728)
+2023-01-14 13:47:44,158 Epoch: [39][200/214]	Time 0.780s (0.844s)	Speed 41.0 samples/s	Data 0.001s (0.073s)	Loss 0.00041 (0.00040)	Accuracy 0.722 (0.727)
+2023-01-14 13:48:07,358 Test: [0/54]	Time 11.556 (11.556)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:48:33,082 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:48:33,083 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:48:33,083 | pose_hrnet | 87.747 | 83.273 | 72.039 | 72.792 | 90.103 | 86.241 | 82.141 | 91.193 | 81.546 | 84.510 |
+2023-01-14 13:48:33,084 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:48:46,794 Epoch: [40][0/214]	Time 12.120s (12.120s)	Speed 2.6 samples/s	Data 11.360s (11.360s)	Loss 0.00041 (0.00041)	Accuracy 0.727 (0.727)
+2023-01-14 13:50:05,239 Epoch: [40][100/214]	Time 0.768s (0.897s)	Speed 41.7 samples/s	Data 0.000s (0.128s)	Loss 0.00043 (0.00040)	Accuracy 0.700 (0.728)
+2023-01-14 13:51:24,727 Epoch: [40][200/214]	Time 0.786s (0.846s)	Speed 40.7 samples/s	Data 0.001s (0.073s)	Loss 0.00040 (0.00039)	Accuracy 0.714 (0.736)
+2023-01-14 13:51:47,611 Test: [0/54]	Time 11.288 (11.288)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:52:13,177 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:52:13,178 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:52:13,178 | pose_hrnet | 88.165 | 81.928 | 72.161 | 73.543 | 90.226 | 87.067 | 84.334 | 92.703 | 82.981 | 85.264 |
+2023-01-14 13:52:13,181 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:52:27,804 Epoch: [41][0/214]	Time 12.380s (12.380s)	Speed 2.6 samples/s	Data 11.630s (11.630s)	Loss 0.00038 (0.00038)	Accuracy 0.706 (0.706)
+2023-01-14 13:53:46,375 Epoch: [41][100/214]	Time 0.797s (0.900s)	Speed 40.2 samples/s	Data 0.000s (0.131s)	Loss 0.00036 (0.00038)	Accuracy 0.771 (0.738)
+2023-01-14 13:55:05,689 Epoch: [41][200/214]	Time 0.773s (0.847s)	Speed 41.4 samples/s	Data 0.000s (0.074s)	Loss 0.00038 (0.00038)	Accuracy 0.787 (0.743)
+2023-01-14 13:55:29,048 Test: [0/54]	Time 11.756 (11.756)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:55:54,782 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:55:54,782 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:55:54,783 | pose_hrnet | 88.285 | 82.300 | 73.878 | 72.087 | 89.742 | 85.606 | 82.219 | 91.471 | 82.206 | 84.653 |
+2023-01-14 13:55:54,784 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:56:08,426 Epoch: [42][0/214]	Time 11.991s (11.991s)	Speed 2.7 samples/s	Data 11.245s (11.245s)	Loss 0.00039 (0.00039)	Accuracy 0.693 (0.693)
+2023-01-14 13:57:26,995 Epoch: [42][100/214]	Time 0.786s (0.897s)	Speed 40.7 samples/s	Data 0.001s (0.127s)	Loss 0.00043 (0.00039)	Accuracy 0.729 (0.740)
+2023-01-14 13:58:46,188 Epoch: [42][200/214]	Time 0.778s (0.845s)	Speed 41.1 samples/s	Data 0.000s (0.072s)	Loss 0.00043 (0.00038)	Accuracy 0.734 (0.748)
+2023-01-14 13:59:09,022 Test: [0/54]	Time 11.320 (11.320)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 13:59:34,569 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 13:59:34,569 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 13:59:34,570 | pose_hrnet | 88.464 | 83.654 | 72.282 | 74.680 | 90.223 | 85.730 | 82.368 | 92.589 | 83.195 | 85.352 |
+2023-01-14 13:59:34,572 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 13:59:48,800 Epoch: [43][0/214]	Time 11.996s (11.996s)	Speed 2.7 samples/s	Data 11.257s (11.257s)	Loss 0.00038 (0.00038)	Accuracy 0.773 (0.773)
+2023-01-14 14:01:07,536 Epoch: [43][100/214]	Time 0.786s (0.898s)	Speed 40.7 samples/s	Data 0.001s (0.128s)	Loss 0.00035 (0.00038)	Accuracy 0.733 (0.749)
+2023-01-14 14:02:27,020 Epoch: [43][200/214]	Time 0.770s (0.847s)	Speed 41.6 samples/s	Data 0.000s (0.073s)	Loss 0.00039 (0.00038)	Accuracy 0.763 (0.751)
+2023-01-14 14:02:49,957 Test: [0/54]	Time 11.327 (11.327)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:03:15,540 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:03:15,540 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:03:15,540 | pose_hrnet | 88.643 | 81.370 | 72.410 | 72.382 | 90.405 | 85.608 | 83.506 | 92.520 | 84.355 | 85.195 |
+2023-01-14 14:03:15,542 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:03:29,595 Epoch: [44][0/214]	Time 12.318s (12.318s)	Speed 2.6 samples/s	Data 11.555s (11.555s)	Loss 0.00036 (0.00036)	Accuracy 0.785 (0.785)
+2023-01-14 14:04:48,418 Epoch: [44][100/214]	Time 0.760s (0.902s)	Speed 42.1 samples/s	Data 0.000s (0.130s)	Loss 0.00040 (0.00037)	Accuracy 0.739 (0.761)
+2023-01-14 14:06:07,917 Epoch: [44][200/214]	Time 0.775s (0.849s)	Speed 41.3 samples/s	Data 0.000s (0.073s)	Loss 0.00034 (0.00037)	Accuracy 0.795 (0.763)
+2023-01-14 14:06:31,064 Test: [0/54]	Time 11.428 (11.428)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:06:56,788 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:06:56,788 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:06:56,789 | pose_hrnet | 88.822 | 81.484 | 69.754 | 71.776 | 89.741 | 85.665 | 83.652 | 91.784 | 81.569 | 84.186 |
+2023-01-14 14:06:56,790 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:07:10,607 Epoch: [45][0/214]	Time 12.141s (12.141s)	Speed 2.6 samples/s	Data 11.393s (11.393s)	Loss 0.00039 (0.00039)	Accuracy 0.757 (0.757)
+2023-01-14 14:08:29,427 Epoch: [45][100/214]	Time 0.756s (0.901s)	Speed 42.3 samples/s	Data 0.000s (0.129s)	Loss 0.00037 (0.00037)	Accuracy 0.690 (0.762)
+2023-01-14 14:09:48,592 Epoch: [45][200/214]	Time 0.778s (0.846s)	Speed 41.1 samples/s	Data 0.000s (0.073s)	Loss 0.00032 (0.00037)	Accuracy 0.783 (0.764)
+2023-01-14 14:10:11,694 Test: [0/54]	Time 11.436 (11.436)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:10:37,212 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:10:37,212 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:10:37,213 | pose_hrnet | 89.839 | 83.256 | 74.141 | 73.932 | 91.613 | 86.501 | 84.491 | 93.573 | 84.889 | 86.463 |
+2023-01-14 14:10:37,214 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:10:51,449 Epoch: [46][0/214]	Time 12.129s (12.129s)	Speed 2.6 samples/s	Data 11.392s (11.392s)	Loss 0.00039 (0.00039)	Accuracy 0.732 (0.732)
+2023-01-14 14:12:09,835 Epoch: [46][100/214]	Time 0.773s (0.896s)	Speed 41.4 samples/s	Data 0.000s (0.128s)	Loss 0.00035 (0.00036)	Accuracy 0.726 (0.766)
+2023-01-14 14:13:29,285 Epoch: [46][200/214]	Time 0.786s (0.846s)	Speed 40.7 samples/s	Data 0.001s (0.072s)	Loss 0.00034 (0.00036)	Accuracy 0.786 (0.768)
+2023-01-14 14:13:52,456 Test: [0/54]	Time 11.533 (11.533)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:14:18,154 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:14:18,155 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:14:18,156 | pose_hrnet | 88.583 | 82.566 | 73.149 | 72.623 | 89.983 | 86.436 | 83.284 | 91.960 | 83.146 | 85.107 |
+2023-01-14 14:14:18,158 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:14:31,901 Epoch: [47][0/214]	Time 12.172s (12.172s)	Speed 2.6 samples/s	Data 11.431s (11.431s)	Loss 0.00035 (0.00035)	Accuracy 0.842 (0.842)
+2023-01-14 14:15:50,569 Epoch: [47][100/214]	Time 0.805s (0.899s)	Speed 39.8 samples/s	Data 0.000s (0.129s)	Loss 0.00031 (0.00035)	Accuracy 0.780 (0.774)
+2023-01-14 14:17:09,898 Epoch: [47][200/214]	Time 0.760s (0.847s)	Speed 42.1 samples/s	Data 0.000s (0.073s)	Loss 0.00034 (0.00036)	Accuracy 0.814 (0.773)
+2023-01-14 14:17:32,861 Test: [0/54]	Time 11.376 (11.376)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:17:58,566 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:17:58,567 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:17:58,567 | pose_hrnet | 88.105 | 83.117 | 73.272 | 73.684 | 91.735 | 86.052 | 83.881 | 92.094 | 83.633 | 85.472 |
+2023-01-14 14:17:58,569 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:18:12,096 Epoch: [48][0/214]	Time 11.977s (11.977s)	Speed 2.7 samples/s	Data 11.230s (11.230s)	Loss 0.00037 (0.00037)	Accuracy 0.731 (0.731)
+2023-01-14 14:19:30,688 Epoch: [48][100/214]	Time 0.783s (0.897s)	Speed 40.9 samples/s	Data 0.001s (0.127s)	Loss 0.00032 (0.00036)	Accuracy 0.833 (0.773)
+2023-01-14 14:20:50,151 Epoch: [48][200/214]	Time 0.776s (0.846s)	Speed 41.2 samples/s	Data 0.000s (0.071s)	Loss 0.00033 (0.00035)	Accuracy 0.760 (0.775)
+2023-01-14 14:21:13,160 Test: [0/54]	Time 11.384 (11.384)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:21:38,917 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:21:38,917 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:21:38,918 | pose_hrnet | 89.659 | 83.835 | 72.970 | 74.587 | 90.345 | 86.691 | 83.508 | 92.125 | 83.368 | 85.551 |
+2023-01-14 14:21:38,919 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:21:52,898 Epoch: [49][0/214]	Time 12.283s (12.283s)	Speed 2.6 samples/s	Data 11.532s (11.532s)	Loss 0.00035 (0.00035)	Accuracy 0.772 (0.772)
+2023-01-14 14:23:11,228 Epoch: [49][100/214]	Time 0.788s (0.897s)	Speed 40.6 samples/s	Data 0.001s (0.130s)	Loss 0.00039 (0.00035)	Accuracy 0.737 (0.783)
+2023-01-14 14:24:30,654 Epoch: [49][200/214]	Time 0.773s (0.846s)	Speed 41.4 samples/s	Data 0.001s (0.073s)	Loss 0.00034 (0.00035)	Accuracy 0.772 (0.781)
+2023-01-14 14:24:53,948 Test: [0/54]	Time 11.561 (11.561)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:25:19,639 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:25:19,640 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:25:19,640 | pose_hrnet | 89.958 | 84.098 | 72.960 | 73.501 | 91.794 | 85.159 | 84.485 | 93.017 | 84.323 | 86.028 |
+2023-01-14 14:25:19,643 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:25:33,802 Epoch: [50][0/214]	Time 12.508s (12.508s)	Speed 2.6 samples/s	Data 11.789s (11.789s)	Loss 0.00038 (0.00038)	Accuracy 0.761 (0.761)
+2023-01-14 14:26:52,516 Epoch: [50][100/214]	Time 0.775s (0.903s)	Speed 41.3 samples/s	Data 0.000s (0.132s)	Loss 0.00032 (0.00035)	Accuracy 0.785 (0.777)
+2023-01-14 14:28:11,962 Epoch: [50][200/214]	Time 0.777s (0.849s)	Speed 41.2 samples/s	Data 0.000s (0.074s)	Loss 0.00032 (0.00035)	Accuracy 0.761 (0.783)
+2023-01-14 14:28:35,069 Test: [0/54]	Time 11.406 (11.406)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:29:00,776 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:29:00,777 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:29:00,777 | pose_hrnet | 83.981 | 78.697 | 67.872 | 69.574 | 85.637 | 80.636 | 78.964 | 86.124 | 79.133 | 80.367 |
+2023-01-14 14:29:00,779 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:29:14,926 Epoch: [51][0/214]	Time 12.453s (12.453s)	Speed 2.6 samples/s	Data 11.702s (11.702s)	Loss 0.00033 (0.00033)	Accuracy 0.801 (0.801)
+2023-01-14 14:30:33,761 Epoch: [51][100/214]	Time 0.774s (0.904s)	Speed 41.3 samples/s	Data 0.000s (0.132s)	Loss 0.00031 (0.00034)	Accuracy 0.813 (0.789)
+2023-01-14 14:31:53,161 Epoch: [51][200/214]	Time 0.776s (0.849s)	Speed 41.2 samples/s	Data 0.000s (0.074s)	Loss 0.00030 (0.00034)	Accuracy 0.824 (0.790)
+2023-01-14 14:32:16,171 Test: [0/54]	Time 11.388 (11.388)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:32:41,797 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:32:41,798 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:32:41,798 | pose_hrnet | 90.556 | 84.447 | 75.371 | 76.846 | 92.337 | 87.900 | 83.881 | 93.587 | 85.199 | 86.995 |
+2023-01-14 14:32:41,801 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:32:56,458 Epoch: [52][0/214]	Time 12.405s (12.405s)	Speed 2.6 samples/s	Data 11.666s (11.666s)	Loss 0.00036 (0.00036)	Accuracy 0.814 (0.814)
+2023-01-14 14:34:14,809 Epoch: [52][100/214]	Time 0.788s (0.899s)	Speed 40.6 samples/s	Data 0.000s (0.131s)	Loss 0.00031 (0.00033)	Accuracy 0.801 (0.798)
+2023-01-14 14:35:34,419 Epoch: [52][200/214]	Time 0.790s (0.848s)	Speed 40.5 samples/s	Data 0.000s (0.074s)	Loss 0.00035 (0.00033)	Accuracy 0.781 (0.800)
+2023-01-14 14:35:57,422 Test: [0/54]	Time 11.343 (11.343)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:36:22,990 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:36:22,990 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:36:22,991 | pose_hrnet | 88.344 | 84.010 | 75.674 | 77.121 | 91.732 | 86.314 | 84.113 | 92.213 | 84.444 | 86.199 |
+2023-01-14 14:36:22,993 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:36:36,930 Epoch: [53][0/214]	Time 12.376s (12.376s)	Speed 2.6 samples/s	Data 11.638s (11.638s)	Loss 0.00032 (0.00032)	Accuracy 0.830 (0.830)
+2023-01-14 14:37:55,641 Epoch: [53][100/214]	Time 0.779s (0.902s)	Speed 41.1 samples/s	Data 0.000s (0.131s)	Loss 0.00037 (0.00033)	Accuracy 0.805 (0.802)
+2023-01-14 14:39:15,050 Epoch: [53][200/214]	Time 0.784s (0.848s)	Speed 40.8 samples/s	Data 0.000s (0.074s)	Loss 0.00033 (0.00033)	Accuracy 0.801 (0.799)
+2023-01-14 14:39:38,214 Test: [0/54]	Time 11.511 (11.511)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:40:03,901 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:40:03,901 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:40:03,902 | pose_hrnet | 90.137 | 83.805 | 75.059 | 75.514 | 90.524 | 86.372 | 84.268 | 92.337 | 84.329 | 86.254 |
+2023-01-14 14:40:03,904 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:40:18,035 Epoch: [54][0/214]	Time 12.428s (12.428s)	Speed 2.6 samples/s	Data 11.692s (11.692s)	Loss 0.00031 (0.00031)	Accuracy 0.805 (0.805)
+2023-01-14 14:41:36,289 Epoch: [54][100/214]	Time 0.777s (0.898s)	Speed 41.2 samples/s	Data 0.000s (0.131s)	Loss 0.00036 (0.00033)	Accuracy 0.780 (0.805)
+2023-01-14 14:42:55,704 Epoch: [54][200/214]	Time 0.779s (0.846s)	Speed 41.1 samples/s	Data 0.001s (0.074s)	Loss 0.00033 (0.00032)	Accuracy 0.816 (0.806)
+2023-01-14 14:43:18,485 Test: [0/54]	Time 11.072 (11.072)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:43:44,116 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:43:44,117 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:43:44,117 | pose_hrnet | 90.137 | 84.317 | 74.250 | 73.792 | 90.767 | 87.205 | 83.808 | 92.589 | 84.919 | 86.356 |
+2023-01-14 14:43:44,118 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:43:57,736 Epoch: [55][0/214]	Time 12.017s (12.017s)	Speed 2.7 samples/s	Data 11.296s (11.296s)	Loss 0.00030 (0.00030)	Accuracy 0.848 (0.848)
+2023-01-14 14:45:16,269 Epoch: [55][100/214]	Time 0.772s (0.897s)	Speed 41.5 samples/s	Data 0.000s (0.127s)	Loss 0.00033 (0.00032)	Accuracy 0.758 (0.815)
+2023-01-14 14:46:35,657 Epoch: [55][200/214]	Time 0.794s (0.845s)	Speed 40.3 samples/s	Data 0.000s (0.072s)	Loss 0.00038 (0.00032)	Accuracy 0.752 (0.814)
+2023-01-14 14:46:58,774 Test: [0/54]	Time 11.525 (11.525)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:47:24,436 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:47:24,436 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:47:24,436 | pose_hrnet | 90.137 | 84.159 | 74.072 | 74.883 | 90.948 | 86.884 | 85.624 | 92.400 | 84.206 | 86.208 |
+2023-01-14 14:47:24,438 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:47:38,414 Epoch: [56][0/214]	Time 12.375s (12.375s)	Speed 2.6 samples/s	Data 11.638s (11.638s)	Loss 0.00030 (0.00030)	Accuracy 0.796 (0.796)
+2023-01-14 14:48:57,177 Epoch: [56][100/214]	Time 0.785s (0.902s)	Speed 40.8 samples/s	Data 0.001s (0.133s)	Loss 0.00030 (0.00031)	Accuracy 0.828 (0.820)
+2023-01-14 14:50:16,457 Epoch: [56][200/214]	Time 0.776s (0.848s)	Speed 41.2 samples/s	Data 0.000s (0.075s)	Loss 0.00032 (0.00032)	Accuracy 0.807 (0.812)
+2023-01-14 14:50:39,234 Test: [0/54]	Time 11.199 (11.199)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:51:04,870 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:51:04,871 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:51:04,872 | pose_hrnet | 89.779 | 84.921 | 75.502 | 76.202 | 91.492 | 87.833 | 84.565 | 93.732 | 86.798 | 87.148 |
+2023-01-14 14:51:04,874 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:51:19,722 Epoch: [57][0/214]	Time 12.521s (12.521s)	Speed 2.6 samples/s	Data 11.766s (11.766s)	Loss 0.00029 (0.00029)	Accuracy 0.816 (0.816)
+2023-01-14 14:52:38,237 Epoch: [57][100/214]	Time 0.770s (0.901s)	Speed 41.6 samples/s	Data 0.000s (0.133s)	Loss 0.00029 (0.00032)	Accuracy 0.869 (0.818)
+2023-01-14 14:53:57,907 Epoch: [57][200/214]	Time 0.787s (0.849s)	Speed 40.7 samples/s	Data 0.000s (0.075s)	Loss 0.00028 (0.00031)	Accuracy 0.840 (0.821)
+2023-01-14 14:54:20,971 Test: [0/54]	Time 11.385 (11.385)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:54:46,739 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:54:46,739 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:54:46,740 | pose_hrnet | 89.241 | 82.734 | 74.440 | 74.951 | 91.069 | 86.307 | 84.718 | 91.851 | 83.226 | 85.477 |
+2023-01-14 14:54:46,741 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:55:00,308 Epoch: [58][0/214]	Time 11.893s (11.893s)	Speed 2.7 samples/s	Data 11.151s (11.151s)	Loss 0.00029 (0.00029)	Accuracy 0.885 (0.885)
+2023-01-14 14:56:18,828 Epoch: [58][100/214]	Time 0.777s (0.895s)	Speed 41.2 samples/s	Data 0.001s (0.126s)	Loss 0.00029 (0.00031)	Accuracy 0.898 (0.826)
+2023-01-14 14:57:38,358 Epoch: [58][200/214]	Time 0.768s (0.845s)	Speed 41.7 samples/s	Data 0.000s (0.071s)	Loss 0.00030 (0.00031)	Accuracy 0.835 (0.819)
+2023-01-14 14:58:01,415 Test: [0/54]	Time 11.425 (11.425)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 14:58:27,095 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 14:58:27,096 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 14:58:27,096 | pose_hrnet | 90.675 | 85.809 | 76.780 | 78.391 | 92.938 | 87.516 | 85.696 | 94.189 | 86.315 | 87.823 |
+2023-01-14 14:58:27,097 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 14:58:41,252 Epoch: [59][0/214]	Time 12.043s (12.043s)	Speed 2.7 samples/s	Data 11.292s (11.292s)	Loss 0.00028 (0.00028)	Accuracy 0.862 (0.862)
+2023-01-14 14:59:59,904 Epoch: [59][100/214]	Time 0.779s (0.898s)	Speed 41.1 samples/s	Data 0.000s (0.128s)	Loss 0.00030 (0.00032)	Accuracy 0.807 (0.816)
+2023-01-14 15:01:19,493 Epoch: [59][200/214]	Time 0.775s (0.847s)	Speed 41.3 samples/s	Data 0.000s (0.072s)	Loss 0.00029 (0.00031)	Accuracy 0.863 (0.819)
+2023-01-14 15:01:42,397 Test: [0/54]	Time 11.302 (11.302)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:02:08,093 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:02:08,094 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:02:08,094 | pose_hrnet | 89.659 | 83.209 | 73.282 | 75.508 | 90.888 | 87.263 | 84.030 | 93.047 | 83.562 | 85.856 |
+2023-01-14 15:02:08,096 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:02:21,917 Epoch: [60][0/214]	Time 12.222s (12.222s)	Speed 2.6 samples/s	Data 11.441s (11.441s)	Loss 0.00032 (0.00032)	Accuracy 0.830 (0.830)
+2023-01-14 15:03:40,856 Epoch: [60][100/214]	Time 0.758s (0.903s)	Speed 42.2 samples/s	Data 0.000s (0.129s)	Loss 0.00029 (0.00032)	Accuracy 0.808 (0.810)
+2023-01-14 15:05:00,406 Epoch: [60][200/214]	Time 0.776s (0.849s)	Speed 41.2 samples/s	Data 0.001s (0.073s)	Loss 0.00031 (0.00032)	Accuracy 0.829 (0.816)
+2023-01-14 15:05:23,299 Test: [0/54]	Time 11.213 (11.213)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:05:48,950 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:05:48,950 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:05:48,951 | pose_hrnet | 89.301 | 85.649 | 75.060 | 77.009 | 92.999 | 87.837 | 85.548 | 93.915 | 85.454 | 87.305 |
+2023-01-14 15:05:48,952 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:06:02,587 Epoch: [61][0/214]	Time 12.015s (12.015s)	Speed 2.7 samples/s	Data 11.270s (11.270s)	Loss 0.00029 (0.00029)	Accuracy 0.854 (0.854)
+2023-01-14 15:07:21,508 Epoch: [61][100/214]	Time 0.759s (0.900s)	Speed 42.2 samples/s	Data 0.000s (0.127s)	Loss 0.00026 (0.00031)	Accuracy 0.836 (0.821)
+2023-01-14 15:08:40,961 Epoch: [61][200/214]	Time 0.782s (0.848s)	Speed 40.9 samples/s	Data 0.000s (0.072s)	Loss 0.00031 (0.00031)	Accuracy 0.824 (0.826)
+2023-01-14 15:09:03,922 Test: [0/54]	Time 11.291 (11.291)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:09:29,645 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:09:29,645 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:09:29,646 | pose_hrnet | 88.703 | 83.740 | 74.324 | 76.612 | 90.587 | 86.116 | 83.732 | 91.426 | 83.171 | 85.445 |
+2023-01-14 15:09:29,647 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:09:43,564 Epoch: [62][0/214]	Time 12.372s (12.372s)	Speed 2.6 samples/s	Data 11.636s (11.636s)	Loss 0.00032 (0.00032)	Accuracy 0.819 (0.819)
+2023-01-14 15:11:02,363 Epoch: [62][100/214]	Time 0.776s (0.903s)	Speed 41.2 samples/s	Data 0.000s (0.131s)	Loss 0.00032 (0.00030)	Accuracy 0.779 (0.829)
+2023-01-14 15:12:21,868 Epoch: [62][200/214]	Time 0.760s (0.849s)	Speed 42.1 samples/s	Data 0.000s (0.074s)	Loss 0.00030 (0.00030)	Accuracy 0.831 (0.833)
+2023-01-14 15:12:44,894 Test: [0/54]	Time 11.444 (11.444)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:13:10,712 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:13:10,712 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:13:10,712 | pose_hrnet | 90.915 | 84.355 | 76.179 | 78.083 | 92.579 | 88.469 | 85.621 | 93.600 | 86.152 | 87.476 |
+2023-01-14 15:13:10,714 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:13:24,613 Epoch: [63][0/214]	Time 12.172s (12.172s)	Speed 2.6 samples/s	Data 11.421s (11.421s)	Loss 0.00031 (0.00031)	Accuracy 0.832 (0.832)
+2023-01-14 15:14:43,158 Epoch: [63][100/214]	Time 0.775s (0.898s)	Speed 41.3 samples/s	Data 0.000s (0.129s)	Loss 0.00028 (0.00030)	Accuracy 0.853 (0.836)
+2023-01-14 15:16:02,418 Epoch: [63][200/214]	Time 0.778s (0.846s)	Speed 41.1 samples/s	Data 0.000s (0.072s)	Loss 0.00031 (0.00030)	Accuracy 0.864 (0.838)
+2023-01-14 15:16:25,678 Test: [0/54]	Time 11.606 (11.606)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:16:51,417 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:16:51,417 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:16:51,418 | pose_hrnet | 89.002 | 85.011 | 75.124 | 78.296 | 89.318 | 84.782 | 83.281 | 92.782 | 86.076 | 86.472 |
+2023-01-14 15:16:51,419 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:17:05,337 Epoch: [64][0/214]	Time 12.210s (12.210s)	Speed 2.6 samples/s	Data 11.481s (11.481s)	Loss 0.00032 (0.00032)	Accuracy 0.792 (0.792)
+2023-01-14 15:18:23,878 Epoch: [64][100/214]	Time 0.760s (0.899s)	Speed 42.1 samples/s	Data 0.001s (0.129s)	Loss 0.00031 (0.00031)	Accuracy 0.823 (0.827)
+2023-01-14 15:19:43,320 Epoch: [64][200/214]	Time 0.784s (0.847s)	Speed 40.8 samples/s	Data 0.001s (0.073s)	Loss 0.00029 (0.00030)	Accuracy 0.807 (0.835)
+2023-01-14 15:20:06,405 Test: [0/54]	Time 11.394 (11.394)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:20:32,068 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:20:32,069 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:20:32,069 | pose_hrnet | 89.480 | 85.660 | 76.302 | 78.296 | 91.490 | 87.518 | 83.962 | 93.449 | 85.858 | 87.180 |
+2023-01-14 15:20:32,071 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:20:45,960 Epoch: [65][0/214]	Time 12.064s (12.064s)	Speed 2.7 samples/s	Data 11.336s (11.336s)	Loss 0.00027 (0.00027)	Accuracy 0.882 (0.882)
+2023-01-14 15:22:04,734 Epoch: [65][100/214]	Time 0.778s (0.899s)	Speed 41.1 samples/s	Data 0.000s (0.128s)	Loss 0.00028 (0.00029)	Accuracy 0.820 (0.839)
+2023-01-14 15:23:24,260 Epoch: [65][200/214]	Time 0.772s (0.848s)	Speed 41.5 samples/s	Data 0.000s (0.073s)	Loss 0.00030 (0.00029)	Accuracy 0.827 (0.840)
+2023-01-14 15:23:46,879 Test: [0/54]	Time 11.000 (11.000)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:24:12,520 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:24:12,520 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:24:12,521 | pose_hrnet | 90.377 | 84.925 | 75.922 | 78.767 | 90.163 | 87.135 | 85.768 | 92.806 | 85.685 | 87.088 |
+2023-01-14 15:24:12,522 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:24:26,664 Epoch: [66][0/214]	Time 12.544s (12.544s)	Speed 2.6 samples/s	Data 11.808s (11.808s)	Loss 0.00024 (0.00024)	Accuracy 0.859 (0.859)
+2023-01-14 15:25:45,298 Epoch: [66][100/214]	Time 0.784s (0.903s)	Speed 40.8 samples/s	Data 0.000s (0.133s)	Loss 0.00024 (0.00029)	Accuracy 0.902 (0.843)
+2023-01-14 15:27:04,941 Epoch: [66][200/214]	Time 0.781s (0.850s)	Speed 41.0 samples/s	Data 0.000s (0.075s)	Loss 0.00028 (0.00029)	Accuracy 0.831 (0.845)
+2023-01-14 15:27:27,986 Test: [0/54]	Time 11.437 (11.437)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:27:53,731 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:27:53,732 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:27:53,732 | pose_hrnet | 84.579 | 79.977 | 72.672 | 72.558 | 86.482 | 81.788 | 80.851 | 88.208 | 80.941 | 82.196 |
+2023-01-14 15:27:53,735 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:28:07,305 Epoch: [67][0/214]	Time 11.970s (11.970s)	Speed 2.7 samples/s	Data 11.207s (11.207s)	Loss 0.00028 (0.00028)	Accuracy 0.858 (0.858)
+2023-01-14 15:29:25,829 Epoch: [67][100/214]	Time 0.783s (0.896s)	Speed 40.9 samples/s	Data 0.001s (0.127s)	Loss 0.00029 (0.00029)	Accuracy 0.823 (0.837)
+2023-01-14 15:30:45,305 Epoch: [67][200/214]	Time 0.785s (0.846s)	Speed 40.8 samples/s	Data 0.001s (0.072s)	Loss 0.00030 (0.00029)	Accuracy 0.822 (0.844)
+2023-01-14 15:31:08,255 Test: [0/54]	Time 11.277 (11.277)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:31:33,992 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:31:33,992 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:31:33,993 | pose_hrnet | 89.958 | 84.085 | 74.512 | 75.766 | 91.311 | 86.691 | 84.411 | 92.156 | 85.332 | 86.338 |
+2023-01-14 15:31:33,996 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:31:47,860 Epoch: [68][0/214]	Time 12.169s (12.169s)	Speed 2.6 samples/s	Data 11.437s (11.437s)	Loss 0.00023 (0.00023)	Accuracy 0.923 (0.923)
+2023-01-14 15:33:06,683 Epoch: [68][100/214]	Time 0.805s (0.901s)	Speed 39.8 samples/s	Data 0.001s (0.129s)	Loss 0.00028 (0.00028)	Accuracy 0.874 (0.851)
+2023-01-14 15:34:25,907 Epoch: [68][200/214]	Time 0.776s (0.847s)	Speed 41.2 samples/s	Data 0.000s (0.073s)	Loss 0.00028 (0.00028)	Accuracy 0.839 (0.848)
+2023-01-14 15:34:48,867 Test: [0/54]	Time 11.413 (11.413)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:35:14,604 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:35:14,605 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:35:14,605 | pose_hrnet | 88.763 | 82.652 | 72.538 | 75.567 | 91.551 | 87.329 | 84.332 | 92.660 | 85.293 | 85.824 |
+2023-01-14 15:35:14,607 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:35:28,625 Epoch: [69][0/214]	Time 12.344s (12.344s)	Speed 2.6 samples/s	Data 11.611s (11.611s)	Loss 0.00030 (0.00030)	Accuracy 0.828 (0.828)
+2023-01-14 15:36:47,204 Epoch: [69][100/214]	Time 0.799s (0.900s)	Speed 40.1 samples/s	Data 0.000s (0.130s)	Loss 0.00028 (0.00030)	Accuracy 0.838 (0.834)
+2023-01-14 15:38:06,986 Epoch: [69][200/214]	Time 0.778s (0.849s)	Speed 41.1 samples/s	Data 0.001s (0.073s)	Loss 0.00032 (0.00029)	Accuracy 0.784 (0.839)
+2023-01-14 15:38:29,813 Test: [0/54]	Time 11.152 (11.152)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:38:55,500 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:38:55,501 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:38:55,502 | pose_hrnet | 90.496 | 86.274 | 76.163 | 77.964 | 93.543 | 89.172 | 86.077 | 93.812 | 87.090 | 88.078 |
+2023-01-14 15:38:55,504 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:39:09,389 Epoch: [70][0/214]	Time 11.663s (11.663s)	Speed 2.7 samples/s	Data 10.912s (10.912s)	Loss 0.00028 (0.00028)	Accuracy 0.853 (0.853)
+2023-01-14 15:40:28,252 Epoch: [70][100/214]	Time 0.781s (0.896s)	Speed 41.0 samples/s	Data 0.000s (0.124s)	Loss 0.00027 (0.00028)	Accuracy 0.877 (0.852)
+2023-01-14 15:41:47,671 Epoch: [70][200/214]	Time 0.762s (0.845s)	Speed 42.0 samples/s	Data 0.000s (0.070s)	Loss 0.00026 (0.00028)	Accuracy 0.875 (0.854)
+2023-01-14 15:42:10,926 Test: [0/54]	Time 11.646 (11.646)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:42:36,587 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:42:36,588 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:42:36,588 | pose_hrnet | 91.154 | 85.331 | 77.466 | 80.006 | 93.059 | 90.010 | 87.213 | 94.765 | 87.400 | 88.749 |
+2023-01-14 15:42:36,591 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:42:50,765 Epoch: [71][0/214]	Time 11.852s (11.852s)	Speed 2.7 samples/s	Data 11.123s (11.123s)	Loss 0.00028 (0.00028)	Accuracy 0.868 (0.868)
+2023-01-14 15:44:09,475 Epoch: [71][100/214]	Time 0.774s (0.897s)	Speed 41.3 samples/s	Data 0.000s (0.126s)	Loss 0.00029 (0.00028)	Accuracy 0.851 (0.853)
+2023-01-14 15:45:28,883 Epoch: [71][200/214]	Time 0.771s (0.846s)	Speed 41.5 samples/s	Data 0.000s (0.071s)	Loss 0.00027 (0.00028)	Accuracy 0.847 (0.856)
+2023-01-14 15:45:52,066 Test: [0/54]	Time 11.573 (11.573)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:46:17,725 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:46:17,726 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:46:17,726 | pose_hrnet | 82.247 | 78.857 | 71.176 | 72.046 | 86.303 | 83.752 | 78.045 | 83.487 | 80.828 | 80.543 |
+2023-01-14 15:46:17,727 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:46:31,684 Epoch: [72][0/214]	Time 12.398s (12.398s)	Speed 2.6 samples/s	Data 11.636s (11.636s)	Loss 0.00032 (0.00032)	Accuracy 0.827 (0.827)
+2023-01-14 15:47:50,130 Epoch: [72][100/214]	Time 0.775s (0.899s)	Speed 41.3 samples/s	Data 0.000s (0.131s)	Loss 0.00023 (0.00028)	Accuracy 0.869 (0.856)
+2023-01-14 15:49:09,411 Epoch: [72][200/214]	Time 0.777s (0.846s)	Speed 41.2 samples/s	Data 0.000s (0.074s)	Loss 0.00030 (0.00027)	Accuracy 0.858 (0.859)
+2023-01-14 15:49:32,484 Test: [0/54]	Time 11.447 (11.447)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:49:58,206 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:49:58,207 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:49:58,207 | pose_hrnet | 90.795 | 84.862 | 76.402 | 79.046 | 92.276 | 89.746 | 86.837 | 93.495 | 87.223 | 87.967 |
+2023-01-14 15:49:58,209 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:50:11,943 Epoch: [73][0/214]	Time 12.127s (12.127s)	Speed 2.6 samples/s	Data 11.394s (11.394s)	Loss 0.00026 (0.00026)	Accuracy 0.855 (0.855)
+2023-01-14 15:51:30,563 Epoch: [73][100/214]	Time 0.807s (0.898s)	Speed 39.7 samples/s	Data 0.000s (0.129s)	Loss 0.00027 (0.00027)	Accuracy 0.873 (0.863)
+2023-01-14 15:52:49,709 Epoch: [73][200/214]	Time 0.759s (0.845s)	Speed 42.2 samples/s	Data 0.000s (0.073s)	Loss 0.00028 (0.00027)	Accuracy 0.847 (0.861)
+2023-01-14 15:53:12,949 Test: [0/54]	Time 11.492 (11.492)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:53:38,626 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:53:38,626 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:53:38,627 | pose_hrnet | 92.170 | 85.136 | 78.567 | 79.395 | 93.000 | 88.786 | 87.663 | 94.831 | 88.068 | 88.805 |
+2023-01-14 15:53:38,629 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:53:53,129 Epoch: [74][0/214]	Time 12.273s (12.273s)	Speed 2.6 samples/s	Data 11.543s (11.543s)	Loss 0.00027 (0.00027)	Accuracy 0.847 (0.847)
+2023-01-14 15:55:11,566 Epoch: [74][100/214]	Time 0.777s (0.898s)	Speed 41.2 samples/s	Data 0.001s (0.130s)	Loss 0.00026 (0.00027)	Accuracy 0.856 (0.865)
+2023-01-14 15:56:31,249 Epoch: [74][200/214]	Time 0.777s (0.848s)	Speed 41.2 samples/s	Data 0.000s (0.073s)	Loss 0.00023 (0.00027)	Accuracy 0.885 (0.867)
+2023-01-14 15:56:54,212 Test: [0/54]	Time 11.355 (11.355)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 15:57:19,867 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 15:57:19,867 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 15:57:19,868 | pose_hrnet | 91.393 | 87.181 | 78.019 | 80.207 | 94.329 | 90.128 | 87.747 | 94.977 | 87.965 | 89.286 |
+2023-01-14 15:57:19,870 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 15:57:34,539 Epoch: [75][0/214]	Time 12.339s (12.339s)	Speed 2.6 samples/s	Data 11.596s (11.596s)	Loss 0.00025 (0.00025)	Accuracy 0.849 (0.849)
+2023-01-14 15:58:52,949 Epoch: [75][100/214]	Time 0.764s (0.899s)	Speed 41.9 samples/s	Data 0.000s (0.131s)	Loss 0.00025 (0.00027)	Accuracy 0.892 (0.863)
+2023-01-14 16:00:12,471 Epoch: [75][200/214]	Time 0.777s (0.847s)	Speed 41.2 samples/s	Data 0.001s (0.075s)	Loss 0.00021 (0.00027)	Accuracy 0.932 (0.865)
+2023-01-14 16:00:35,677 Test: [0/54]	Time 11.399 (11.399)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:01:01,411 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:01:01,412 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:01:01,412 | pose_hrnet | 91.811 | 86.542 | 77.784 | 80.695 | 94.507 | 90.959 | 86.765 | 95.793 | 88.919 | 89.587 |
+2023-01-14 16:01:01,414 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:01:16,074 Epoch: [76][0/214]	Time 12.533s (12.533s)	Speed 2.6 samples/s	Data 11.795s (11.795s)	Loss 0.00028 (0.00028)	Accuracy 0.848 (0.848)
+2023-01-14 16:02:34,849 Epoch: [76][100/214]	Time 0.772s (0.904s)	Speed 41.5 samples/s	Data 0.000s (0.132s)	Loss 0.00023 (0.00026)	Accuracy 0.913 (0.874)
+2023-01-14 16:03:54,392 Epoch: [76][200/214]	Time 0.763s (0.850s)	Speed 41.9 samples/s	Data 0.000s (0.075s)	Loss 0.00023 (0.00026)	Accuracy 0.913 (0.870)
+2023-01-14 16:04:17,447 Test: [0/54]	Time 11.345 (11.345)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:04:43,106 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:04:43,106 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:04:43,107 | pose_hrnet | 92.349 | 86.893 | 79.373 | 80.031 | 93.423 | 89.106 | 88.803 | 95.408 | 87.368 | 89.346 |
+2023-01-14 16:04:43,109 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:04:56,963 Epoch: [77][0/214]	Time 12.225s (12.225s)	Speed 2.6 samples/s	Data 11.481s (11.481s)	Loss 0.00026 (0.00026)	Accuracy 0.855 (0.855)
+2023-01-14 16:06:15,426 Epoch: [77][100/214]	Time 0.793s (0.898s)	Speed 40.4 samples/s	Data 0.000s (0.129s)	Loss 0.00025 (0.00026)	Accuracy 0.899 (0.872)
+2023-01-14 16:07:34,614 Epoch: [77][200/214]	Time 0.776s (0.845s)	Speed 41.2 samples/s	Data 0.000s (0.073s)	Loss 0.00031 (0.00026)	Accuracy 0.854 (0.874)
+2023-01-14 16:07:57,586 Test: [0/54]	Time 11.344 (11.344)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:08:23,161 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:08:23,162 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:08:23,162 | pose_hrnet | 92.588 | 85.723 | 77.213 | 78.899 | 93.844 | 88.535 | 86.989 | 94.957 | 88.284 | 88.818 |
+2023-01-14 16:08:23,164 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:08:37,219 Epoch: [78][0/214]	Time 12.479s (12.479s)	Speed 2.6 samples/s	Data 11.727s (11.727s)	Loss 0.00022 (0.00022)	Accuracy 0.871 (0.871)
+2023-01-14 16:09:56,148 Epoch: [78][100/214]	Time 0.773s (0.905s)	Speed 41.4 samples/s	Data 0.001s (0.132s)	Loss 0.00025 (0.00026)	Accuracy 0.831 (0.872)
+2023-01-14 16:11:15,655 Epoch: [78][200/214]	Time 0.783s (0.850s)	Speed 40.9 samples/s	Data 0.000s (0.075s)	Loss 0.00024 (0.00026)	Accuracy 0.909 (0.872)
+2023-01-14 16:11:38,634 Test: [0/54]	Time 11.235 (11.235)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:12:04,350 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:12:04,350 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:12:04,351 | pose_hrnet | 90.436 | 85.879 | 78.079 | 79.879 | 93.059 | 87.962 | 87.436 | 93.094 | 88.320 | 88.416 |
+2023-01-14 16:12:04,353 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:12:18,204 Epoch: [79][0/214]	Time 12.221s (12.221s)	Speed 2.6 samples/s	Data 11.496s (11.496s)	Loss 0.00026 (0.00026)	Accuracy 0.846 (0.846)
+2023-01-14 16:13:36,909 Epoch: [79][100/214]	Time 0.786s (0.900s)	Speed 40.7 samples/s	Data 0.001s (0.129s)	Loss 0.00022 (0.00025)	Accuracy 0.900 (0.875)
+2023-01-14 16:14:56,147 Epoch: [79][200/214]	Time 0.790s (0.847s)	Speed 40.5 samples/s	Data 0.001s (0.072s)	Loss 0.00027 (0.00026)	Accuracy 0.854 (0.872)
+2023-01-14 16:15:19,266 Test: [0/54]	Time 11.396 (11.396)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:15:44,836 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:15:44,837 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:15:44,838 | pose_hrnet | 89.002 | 84.384 | 74.698 | 77.985 | 91.913 | 86.369 | 86.447 | 91.805 | 84.851 | 86.375 |
+2023-01-14 16:15:44,840 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:15:58,862 Epoch: [80][0/214]	Time 12.336s (12.336s)	Speed 2.6 samples/s	Data 11.605s (11.605s)	Loss 0.00025 (0.00025)	Accuracy 0.890 (0.890)
+2023-01-14 16:17:17,279 Epoch: [80][100/214]	Time 0.761s (0.899s)	Speed 42.0 samples/s	Data 0.000s (0.131s)	Loss 0.00026 (0.00026)	Accuracy 0.867 (0.871)
+2023-01-14 16:18:36,775 Epoch: [80][200/214]	Time 0.797s (0.847s)	Speed 40.2 samples/s	Data 0.000s (0.074s)	Loss 0.00026 (0.00026)	Accuracy 0.841 (0.872)
+2023-01-14 16:19:00,065 Test: [0/54]	Time 11.599 (11.599)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:19:25,688 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:19:25,689 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:19:25,690 | pose_hrnet | 90.795 | 86.079 | 75.246 | 79.661 | 92.757 | 88.665 | 87.590 | 93.837 | 87.277 | 88.092 |
+2023-01-14 16:19:25,692 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:19:40,072 Epoch: [81][0/214]	Time 12.590s (12.590s)	Speed 2.5 samples/s	Data 11.842s (11.842s)	Loss 0.00022 (0.00022)	Accuracy 0.894 (0.894)
+2023-01-14 16:20:58,200 Epoch: [81][100/214]	Time 0.784s (0.898s)	Speed 40.8 samples/s	Data 0.000s (0.133s)	Loss 0.00028 (0.00025)	Accuracy 0.837 (0.879)
+2023-01-14 16:22:17,596 Epoch: [81][200/214]	Time 0.777s (0.846s)	Speed 41.2 samples/s	Data 0.000s (0.075s)	Loss 0.00025 (0.00025)	Accuracy 0.853 (0.877)
+2023-01-14 16:22:40,141 Test: [0/54]	Time 10.976 (10.976)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:23:05,792 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:23:05,792 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:23:05,793 | pose_hrnet | 91.931 | 84.628 | 77.532 | 81.395 | 92.698 | 89.814 | 87.667 | 95.085 | 88.380 | 89.184 |
+2023-01-14 16:23:05,795 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:23:19,681 Epoch: [82][0/214]	Time 12.196s (12.196s)	Speed 2.6 samples/s	Data 11.454s (11.454s)	Loss 0.00023 (0.00023)	Accuracy 0.867 (0.867)
+2023-01-14 16:24:38,143 Epoch: [82][100/214]	Time 0.795s (0.898s)	Speed 40.3 samples/s	Data 0.000s (0.129s)	Loss 0.00026 (0.00026)	Accuracy 0.844 (0.873)
+2023-01-14 16:25:57,529 Epoch: [82][200/214]	Time 0.776s (0.846s)	Speed 41.2 samples/s	Data 0.000s (0.073s)	Loss 0.00025 (0.00026)	Accuracy 0.891 (0.873)
+2023-01-14 16:26:20,615 Test: [0/54]	Time 11.440 (11.440)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:26:46,278 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:26:46,278 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:26:46,278 | pose_hrnet | 91.273 | 84.506 | 76.356 | 78.281 | 93.363 | 88.280 | 87.138 | 93.756 | 86.717 | 87.819 |
+2023-01-14 16:26:46,281 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:26:59,987 Epoch: [83][0/214]	Time 12.130s (12.130s)	Speed 2.6 samples/s	Data 11.378s (11.378s)	Loss 0.00026 (0.00026)	Accuracy 0.876 (0.876)
+2023-01-14 16:28:18,552 Epoch: [83][100/214]	Time 0.775s (0.898s)	Speed 41.3 samples/s	Data 0.001s (0.128s)	Loss 0.00021 (0.00025)	Accuracy 0.929 (0.880)
+2023-01-14 16:29:37,795 Epoch: [83][200/214]	Time 0.777s (0.845s)	Speed 41.2 samples/s	Data 0.000s (0.073s)	Loss 0.00030 (0.00025)	Accuracy 0.851 (0.880)
+2023-01-14 16:30:00,555 Test: [0/54]	Time 11.232 (11.232)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:30:26,165 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:30:26,166 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:30:26,167 | pose_hrnet | 91.572 | 85.491 | 77.517 | 78.759 | 92.760 | 88.727 | 87.516 | 94.423 | 86.878 | 88.342 |
+2023-01-14 16:30:26,169 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:30:39,995 Epoch: [84][0/214]	Time 12.209s (12.209s)	Speed 2.6 samples/s	Data 11.477s (11.477s)	Loss 0.00024 (0.00024)	Accuracy 0.911 (0.911)
+2023-01-14 16:31:58,589 Epoch: [84][100/214]	Time 0.758s (0.899s)	Speed 42.2 samples/s	Data 0.000s (0.130s)	Loss 0.00027 (0.00025)	Accuracy 0.867 (0.883)
+2023-01-14 16:33:17,841 Epoch: [84][200/214]	Time 0.820s (0.846s)	Speed 39.0 samples/s	Data 0.000s (0.073s)	Loss 0.00020 (0.00024)	Accuracy 0.918 (0.885)
+2023-01-14 16:33:40,841 Test: [0/54]	Time 11.352 (11.352)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:34:06,532 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:34:06,533 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:34:06,533 | pose_hrnet | 91.154 | 85.647 | 77.647 | 81.211 | 93.122 | 90.133 | 86.833 | 93.754 | 86.739 | 88.407 |
+2023-01-14 16:34:06,535 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:34:20,573 Epoch: [85][0/214]	Time 12.365s (12.365s)	Speed 2.6 samples/s	Data 11.615s (11.615s)	Loss 0.00031 (0.00031)	Accuracy 0.888 (0.888)
+2023-01-14 16:35:39,063 Epoch: [85][100/214]	Time 0.763s (0.900s)	Speed 41.9 samples/s	Data 0.000s (0.131s)	Loss 0.00022 (0.00024)	Accuracy 0.886 (0.885)
+2023-01-14 16:36:58,459 Epoch: [85][200/214]	Time 0.774s (0.847s)	Speed 41.3 samples/s	Data 0.000s (0.074s)	Loss 0.00024 (0.00025)	Accuracy 0.912 (0.883)
+2023-01-14 16:37:21,612 Test: [0/54]	Time 11.486 (11.486)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:37:47,237 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:37:47,237 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:37:47,238 | pose_hrnet | 90.795 | 85.868 | 76.716 | 79.981 | 93.121 | 89.237 | 87.135 | 94.055 | 87.280 | 88.328 |
+2023-01-14 16:37:47,240 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:38:00,933 Epoch: [86][0/214]	Time 12.095s (12.095s)	Speed 2.6 samples/s	Data 11.363s (11.363s)	Loss 0.00024 (0.00024)	Accuracy 0.910 (0.910)
+2023-01-14 16:39:19,659 Epoch: [86][100/214]	Time 0.798s (0.899s)	Speed 40.1 samples/s	Data 0.000s (0.129s)	Loss 0.00025 (0.00025)	Accuracy 0.903 (0.884)
+2023-01-14 16:40:39,143 Epoch: [86][200/214]	Time 0.774s (0.847s)	Speed 41.3 samples/s	Data 0.000s (0.073s)	Loss 0.00025 (0.00024)	Accuracy 0.835 (0.887)
+2023-01-14 16:41:02,375 Test: [0/54]	Time 11.488 (11.488)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:41:28,023 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:41:28,024 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:41:28,024 | pose_hrnet | 91.094 | 85.344 | 76.905 | 78.960 | 91.673 | 87.645 | 85.238 | 93.261 | 86.323 | 87.388 |
+2023-01-14 16:41:28,026 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:41:41,855 Epoch: [87][0/214]	Time 12.282s (12.282s)	Speed 2.6 samples/s	Data 11.544s (11.544s)	Loss 0.00027 (0.00027)	Accuracy 0.885 (0.885)
+2023-01-14 16:43:00,514 Epoch: [87][100/214]	Time 0.793s (0.900s)	Speed 40.4 samples/s	Data 0.000s (0.130s)	Loss 0.00025 (0.00025)	Accuracy 0.899 (0.885)
+2023-01-14 16:44:19,800 Epoch: [87][200/214]	Time 0.757s (0.847s)	Speed 42.3 samples/s	Data 0.000s (0.073s)	Loss 0.00023 (0.00025)	Accuracy 0.929 (0.884)
+2023-01-14 16:44:42,993 Test: [0/54]	Time 11.503 (11.503)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:45:08,438 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:45:08,439 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:45:08,440 | pose_hrnet | 89.898 | 86.066 | 78.380 | 79.719 | 93.544 | 88.857 | 86.305 | 93.737 | 86.778 | 88.231 |
+2023-01-14 16:45:08,441 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:45:22,130 Epoch: [88][0/214]	Time 12.117s (12.117s)	Speed 2.6 samples/s	Data 11.375s (11.375s)	Loss 0.00021 (0.00021)	Accuracy 0.920 (0.920)
+2023-01-14 16:46:40,555 Epoch: [88][100/214]	Time 0.775s (0.896s)	Speed 41.3 samples/s	Data 0.000s (0.128s)	Loss 0.00020 (0.00023)	Accuracy 0.943 (0.893)
+2023-01-14 16:47:59,909 Epoch: [88][200/214]	Time 0.762s (0.845s)	Speed 42.0 samples/s	Data 0.000s (0.072s)	Loss 0.00022 (0.00023)	Accuracy 0.891 (0.893)
+2023-01-14 16:48:22,757 Test: [0/54]	Time 11.330 (11.330)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:48:48,294 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:48:48,295 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:48:48,295 | pose_hrnet | 90.795 | 86.948 | 78.750 | 80.071 | 94.147 | 89.365 | 88.268 | 94.967 | 87.611 | 89.059 |
+2023-01-14 16:48:48,297 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:49:01,884 Epoch: [89][0/214]	Time 12.003s (12.003s)	Speed 2.7 samples/s	Data 11.248s (11.248s)	Loss 0.00024 (0.00024)	Accuracy 0.844 (0.844)
+2023-01-14 16:50:20,513 Epoch: [89][100/214]	Time 0.807s (0.897s)	Speed 39.7 samples/s	Data 0.000s (0.127s)	Loss 0.00021 (0.00023)	Accuracy 0.913 (0.895)
+2023-01-14 16:51:39,647 Epoch: [89][200/214]	Time 0.777s (0.845s)	Speed 41.2 samples/s	Data 0.000s (0.072s)	Loss 0.00022 (0.00023)	Accuracy 0.911 (0.893)
+2023-01-14 16:52:02,879 Test: [0/54]	Time 11.452 (11.452)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:52:28,437 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:52:28,437 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:52:28,438 | pose_hrnet | 91.512 | 86.312 | 79.442 | 80.866 | 93.906 | 88.667 | 87.818 | 93.747 | 86.640 | 88.606 |
+2023-01-14 16:52:28,440 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:52:42,229 Epoch: [90][0/214]	Time 12.166s (12.166s)	Speed 2.6 samples/s	Data 11.409s (11.409s)	Loss 0.00023 (0.00023)	Accuracy 0.859 (0.859)
+2023-01-14 16:54:00,788 Epoch: [90][100/214]	Time 0.799s (0.898s)	Speed 40.1 samples/s	Data 0.000s (0.129s)	Loss 0.00025 (0.00024)	Accuracy 0.907 (0.892)
+2023-01-14 16:55:20,278 Epoch: [90][200/214]	Time 0.779s (0.847s)	Speed 41.1 samples/s	Data 0.000s (0.073s)	Loss 0.00020 (0.00023)	Accuracy 0.935 (0.892)
+2023-01-14 16:55:43,801 Test: [0/54]	Time 11.778 (11.778)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:56:09,483 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:56:09,484 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:56:09,485 | pose_hrnet | 91.811 | 86.487 | 79.245 | 80.826 | 92.336 | 89.813 | 87.588 | 94.491 | 88.188 | 89.110 |
+2023-01-14 16:56:09,487 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 16:56:23,474 Epoch: [91][0/214]	Time 12.398s (12.398s)	Speed 2.6 samples/s	Data 11.658s (11.658s)	Loss 0.00026 (0.00026)	Accuracy 0.895 (0.895)
+2023-01-14 16:57:42,387 Epoch: [91][100/214]	Time 0.767s (0.904s)	Speed 41.7 samples/s	Data 0.001s (0.131s)	Loss 0.00025 (0.00025)	Accuracy 0.895 (0.881)
+2023-01-14 16:59:01,743 Epoch: [91][200/214]	Time 0.783s (0.849s)	Speed 40.9 samples/s	Data 0.000s (0.074s)	Loss 0.00021 (0.00024)	Accuracy 0.902 (0.886)
+2023-01-14 16:59:24,720 Test: [0/54]	Time 11.303 (11.303)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 16:59:50,334 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 16:59:50,335 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 16:59:50,335 | pose_hrnet | 90.018 | 85.495 | 77.284 | 79.288 | 92.579 | 89.236 | 86.380 | 92.807 | 86.636 | 87.680 |
+2023-01-14 16:59:50,337 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:00:03,892 Epoch: [92][0/214]	Time 11.997s (11.997s)	Speed 2.7 samples/s	Data 11.259s (11.259s)	Loss 0.00021 (0.00021)	Accuracy 0.921 (0.921)
+2023-01-14 17:01:22,367 Epoch: [92][100/214]	Time 0.792s (0.896s)	Speed 40.4 samples/s	Data 0.000s (0.127s)	Loss 0.00028 (0.00024)	Accuracy 0.808 (0.888)
+2023-01-14 17:02:41,718 Epoch: [92][200/214]	Time 0.777s (0.845s)	Speed 41.2 samples/s	Data 0.000s (0.072s)	Loss 0.00025 (0.00024)	Accuracy 0.892 (0.891)
+2023-01-14 17:03:04,862 Test: [0/54]	Time 11.540 (11.540)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:03:30,737 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:03:30,737 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:03:30,738 | pose_hrnet | 91.452 | 86.735 | 77.205 | 78.772 | 93.363 | 89.301 | 86.453 | 93.435 | 86.787 | 88.138 |
+2023-01-14 17:03:30,740 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:03:44,540 Epoch: [93][0/214]	Time 12.175s (12.175s)	Speed 2.6 samples/s	Data 11.430s (11.430s)	Loss 0.00021 (0.00021)	Accuracy 0.914 (0.914)
+2023-01-14 17:05:03,320 Epoch: [93][100/214]	Time 0.783s (0.901s)	Speed 40.9 samples/s	Data 0.001s (0.129s)	Loss 0.00022 (0.00023)	Accuracy 0.885 (0.899)
+2023-01-14 17:06:22,830 Epoch: [93][200/214]	Time 0.779s (0.848s)	Speed 41.1 samples/s	Data 0.001s (0.072s)	Loss 0.00022 (0.00023)	Accuracy 0.913 (0.898)
+2023-01-14 17:06:45,808 Test: [0/54]	Time 11.331 (11.331)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:07:11,539 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:07:11,540 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:07:11,541 | pose_hrnet | 90.317 | 84.929 | 77.227 | 79.173 | 92.516 | 88.032 | 84.788 | 92.879 | 86.707 | 87.486 |
+2023-01-14 17:07:11,543 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:07:25,362 Epoch: [94][0/214]	Time 12.270s (12.270s)	Speed 2.6 samples/s	Data 11.527s (11.527s)	Loss 0.00023 (0.00023)	Accuracy 0.897 (0.897)
+2023-01-14 17:08:44,027 Epoch: [94][100/214]	Time 0.779s (0.900s)	Speed 41.1 samples/s	Data 0.000s (0.130s)	Loss 0.00022 (0.00023)	Accuracy 0.905 (0.896)
+2023-01-14 17:10:03,534 Epoch: [94][200/214]	Time 0.777s (0.848s)	Speed 41.2 samples/s	Data 0.000s (0.074s)	Loss 0.00026 (0.00023)	Accuracy 0.879 (0.897)
+2023-01-14 17:10:26,584 Test: [0/54]	Time 11.419 (11.419)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:10:52,272 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:10:52,273 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:10:52,273 | pose_hrnet | 90.078 | 85.851 | 78.506 | 80.202 | 92.457 | 88.856 | 84.939 | 93.081 | 86.008 | 87.740 |
+2023-01-14 17:10:52,275 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:11:05,943 Epoch: [95][0/214]	Time 12.065s (12.065s)	Speed 2.7 samples/s	Data 11.326s (11.326s)	Loss 0.00023 (0.00023)	Accuracy 0.901 (0.901)
+2023-01-14 17:12:24,548 Epoch: [95][100/214]	Time 0.815s (0.898s)	Speed 39.3 samples/s	Data 0.001s (0.128s)	Loss 0.00020 (0.00023)	Accuracy 0.914 (0.900)
+2023-01-14 17:13:44,327 Epoch: [95][200/214]	Time 0.776s (0.848s)	Speed 41.2 samples/s	Data 0.001s (0.072s)	Loss 0.00025 (0.00022)	Accuracy 0.912 (0.902)
+2023-01-14 17:14:07,686 Test: [0/54]	Time 11.586 (11.586)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:14:33,423 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:14:33,424 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:14:33,424 | pose_hrnet | 90.915 | 86.628 | 77.907 | 78.328 | 90.707 | 87.265 | 84.638 | 93.154 | 86.395 | 87.430 |
+2023-01-14 17:14:33,426 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:14:47,101 Epoch: [96][0/214]	Time 12.050s (12.050s)	Speed 2.7 samples/s	Data 11.318s (11.318s)	Loss 0.00023 (0.00023)	Accuracy 0.915 (0.915)
+2023-01-14 17:16:05,657 Epoch: [96][100/214]	Time 0.778s (0.897s)	Speed 41.1 samples/s	Data 0.000s (0.127s)	Loss 0.00023 (0.00023)	Accuracy 0.898 (0.901)
+2023-01-14 17:17:25,044 Epoch: [96][200/214]	Time 0.774s (0.846s)	Speed 41.3 samples/s	Data 0.000s (0.072s)	Loss 0.00024 (0.00023)	Accuracy 0.892 (0.900)
+2023-01-14 17:17:47,785 Test: [0/54]	Time 11.113 (11.113)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:18:13,585 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:18:13,585 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:18:13,586 | pose_hrnet | 91.393 | 87.255 | 78.213 | 78.489 | 92.396 | 88.792 | 85.922 | 93.593 | 87.119 | 88.221 |
+2023-01-14 17:18:13,588 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:18:27,753 Epoch: [97][0/214]	Time 12.578s (12.578s)	Speed 2.5 samples/s	Data 11.836s (11.836s)	Loss 0.00023 (0.00023)	Accuracy 0.873 (0.873)
+2023-01-14 17:19:46,713 Epoch: [97][100/214]	Time 0.785s (0.906s)	Speed 40.8 samples/s	Data 0.000s (0.133s)	Loss 0.00019 (0.00022)	Accuracy 0.953 (0.902)
+2023-01-14 17:21:06,148 Epoch: [97][200/214]	Time 0.784s (0.851s)	Speed 40.8 samples/s	Data 0.000s (0.075s)	Loss 0.00024 (0.00022)	Accuracy 0.882 (0.903)
+2023-01-14 17:21:29,081 Test: [0/54]	Time 11.335 (11.335)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:21:54,786 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:21:54,787 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:21:54,788 | pose_hrnet | 90.915 | 85.226 | 76.712 | 77.423 | 90.646 | 87.901 | 84.948 | 92.855 | 86.177 | 87.240 |
+2023-01-14 17:21:54,790 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:22:08,438 Epoch: [98][0/214]	Time 11.980s (11.980s)	Speed 2.7 samples/s	Data 11.249s (11.249s)	Loss 0.00021 (0.00021)	Accuracy 0.938 (0.938)
+2023-01-14 17:23:27,029 Epoch: [98][100/214]	Time 0.760s (0.897s)	Speed 42.1 samples/s	Data 0.000s (0.127s)	Loss 0.00019 (0.00022)	Accuracy 0.942 (0.907)
+2023-01-14 17:24:46,475 Epoch: [98][200/214]	Time 0.785s (0.846s)	Speed 40.8 samples/s	Data 0.001s (0.072s)	Loss 0.00024 (0.00022)	Accuracy 0.884 (0.904)
+2023-01-14 17:25:09,650 Test: [0/54]	Time 11.425 (11.425)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:25:35,241 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:25:35,242 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:25:35,242 | pose_hrnet | 89.241 | 84.256 | 76.607 | 77.874 | 91.853 | 87.203 | 83.120 | 91.881 | 84.783 | 86.403 |
+2023-01-14 17:25:35,244 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:25:48,782 Epoch: [99][0/214]	Time 11.919s (11.919s)	Speed 2.7 samples/s	Data 11.180s (11.180s)	Loss 0.00020 (0.00020)	Accuracy 0.949 (0.949)
+2023-01-14 17:27:07,478 Epoch: [99][100/214]	Time 0.795s (0.897s)	Speed 40.3 samples/s	Data 0.000s (0.126s)	Loss 0.00019 (0.00022)	Accuracy 0.939 (0.904)
+2023-01-14 17:28:26,929 Epoch: [99][200/214]	Time 0.773s (0.846s)	Speed 41.4 samples/s	Data 0.000s (0.071s)	Loss 0.00023 (0.00022)	Accuracy 0.888 (0.906)
+2023-01-14 17:28:50,128 Test: [0/54]	Time 11.539 (11.539)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:29:15,680 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:29:15,681 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:29:15,681 | pose_hrnet | 90.616 | 85.875 | 77.632 | 78.345 | 92.032 | 89.112 | 84.717 | 93.624 | 86.573 | 87.828 |
+2023-01-14 17:29:15,683 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:29:29,588 Epoch: [100][0/214]	Time 12.307s (12.307s)	Speed 2.6 samples/s	Data 11.571s (11.571s)	Loss 0.00018 (0.00018)	Accuracy 0.935 (0.935)
+2023-01-14 17:30:47,968 Epoch: [100][100/214]	Time 0.757s (0.898s)	Speed 42.3 samples/s	Data 0.000s (0.131s)	Loss 0.00022 (0.00021)	Accuracy 0.867 (0.910)
+2023-01-14 17:32:07,370 Epoch: [100][200/214]	Time 0.782s (0.846s)	Speed 40.9 samples/s	Data 0.000s (0.074s)	Loss 0.00023 (0.00021)	Accuracy 0.881 (0.911)
+2023-01-14 17:32:30,227 Test: [0/54]	Time 11.257 (11.257)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:32:55,906 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:32:55,907 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:32:55,907 | pose_hrnet | 90.616 | 85.399 | 75.799 | 76.971 | 90.887 | 87.712 | 85.621 | 93.225 | 86.154 | 87.236 |
+2023-01-14 17:32:55,910 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:33:09,777 Epoch: [101][0/214]	Time 12.237s (12.237s)	Speed 2.6 samples/s	Data 11.506s (11.506s)	Loss 0.00023 (0.00023)	Accuracy 0.852 (0.852)
+2023-01-14 17:34:28,319 Epoch: [101][100/214]	Time 0.771s (0.899s)	Speed 41.5 samples/s	Data 0.000s (0.130s)	Loss 0.00020 (0.00022)	Accuracy 0.938 (0.905)
+2023-01-14 17:35:47,996 Epoch: [101][200/214]	Time 0.779s (0.848s)	Speed 41.1 samples/s	Data 0.000s (0.073s)	Loss 0.00020 (0.00022)	Accuracy 0.918 (0.906)
+2023-01-14 17:36:11,020 Test: [0/54]	Time 11.390 (11.390)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:36:36,658 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:36:36,659 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:36:36,659 | pose_hrnet | 90.197 | 85.668 | 77.217 | 78.366 | 91.611 | 87.329 | 85.397 | 93.675 | 86.341 | 87.569 |
+2023-01-14 17:36:36,662 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:36:50,215 Epoch: [102][0/214]	Time 11.964s (11.964s)	Speed 2.7 samples/s	Data 11.221s (11.221s)	Loss 0.00022 (0.00022)	Accuracy 0.882 (0.882)
+2023-01-14 17:38:08,546 Epoch: [102][100/214]	Time 0.785s (0.894s)	Speed 40.8 samples/s	Data 0.001s (0.126s)	Loss 0.00020 (0.00021)	Accuracy 0.948 (0.911)
+2023-01-14 17:39:27,979 Epoch: [102][200/214]	Time 0.777s (0.844s)	Speed 41.2 samples/s	Data 0.000s (0.071s)	Loss 0.00022 (0.00021)	Accuracy 0.888 (0.910)
+2023-01-14 17:39:50,979 Test: [0/54]	Time 11.306 (11.306)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:40:16,728 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:40:16,728 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:40:16,728 | pose_hrnet | 91.333 | 85.631 | 77.786 | 79.251 | 92.879 | 88.471 | 85.855 | 93.843 | 86.248 | 88.018 |
+2023-01-14 17:40:16,730 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:40:30,703 Epoch: [103][0/214]	Time 12.421s (12.421s)	Speed 2.6 samples/s	Data 11.661s (11.661s)	Loss 0.00019 (0.00019)	Accuracy 0.925 (0.925)
+2023-01-14 17:41:49,219 Epoch: [103][100/214]	Time 0.794s (0.900s)	Speed 40.3 samples/s	Data 0.001s (0.131s)	Loss 0.00021 (0.00022)	Accuracy 0.905 (0.906)
+2023-01-14 17:43:08,599 Epoch: [103][200/214]	Time 0.788s (0.847s)	Speed 40.6 samples/s	Data 0.000s (0.073s)	Loss 0.00019 (0.00022)	Accuracy 0.940 (0.908)
+2023-01-14 17:43:31,705 Test: [0/54]	Time 11.328 (11.328)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:43:57,485 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:43:57,486 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:43:57,486 | pose_hrnet | 93.066 | 87.259 | 78.633 | 81.407 | 93.784 | 89.176 | 86.079 | 95.099 | 87.585 | 89.253 |
+2023-01-14 17:43:57,489 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:44:11,191 Epoch: [104][0/214]	Time 12.038s (12.038s)	Speed 2.7 samples/s	Data 11.304s (11.304s)	Loss 0.00019 (0.00019)	Accuracy 0.938 (0.938)
+2023-01-14 17:45:29,882 Epoch: [104][100/214]	Time 0.784s (0.898s)	Speed 40.8 samples/s	Data 0.000s (0.128s)	Loss 0.00020 (0.00022)	Accuracy 0.914 (0.907)
+2023-01-14 17:46:49,170 Epoch: [104][200/214]	Time 0.765s (0.846s)	Speed 41.8 samples/s	Data 0.001s (0.072s)	Loss 0.00018 (0.00021)	Accuracy 0.942 (0.908)
+2023-01-14 17:47:12,151 Test: [0/54]	Time 11.327 (11.327)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:47:38,005 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:47:38,006 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:47:38,006 | pose_hrnet | 89.420 | 83.412 | 75.623 | 78.858 | 90.947 | 88.030 | 84.489 | 92.728 | 84.497 | 86.467 |
+2023-01-14 17:47:38,008 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:47:51,809 Epoch: [105][0/214]	Time 12.154s (12.154s)	Speed 2.6 samples/s	Data 11.403s (11.403s)	Loss 0.00021 (0.00021)	Accuracy 0.923 (0.923)
+2023-01-14 17:49:10,370 Epoch: [105][100/214]	Time 0.808s (0.898s)	Speed 39.6 samples/s	Data 0.001s (0.129s)	Loss 0.00017 (0.00021)	Accuracy 0.960 (0.914)
+2023-01-14 17:50:29,970 Epoch: [105][200/214]	Time 0.761s (0.847s)	Speed 42.1 samples/s	Data 0.000s (0.073s)	Loss 0.00021 (0.00021)	Accuracy 0.904 (0.915)
+2023-01-14 17:50:52,948 Test: [0/54]	Time 11.416 (11.416)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:51:18,712 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:51:18,712 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:51:18,713 | pose_hrnet | 89.659 | 86.072 | 76.533 | 79.693 | 91.310 | 88.534 | 85.016 | 93.110 | 85.359 | 87.393 |
+2023-01-14 17:51:18,715 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:51:32,677 Epoch: [106][0/214]	Time 12.399s (12.399s)	Speed 2.6 samples/s	Data 11.660s (11.660s)	Loss 0.00021 (0.00021)	Accuracy 0.903 (0.903)
+2023-01-14 17:52:51,183 Epoch: [106][100/214]	Time 0.785s (0.900s)	Speed 40.8 samples/s	Data 0.000s (0.131s)	Loss 0.00017 (0.00021)	Accuracy 0.956 (0.917)
+2023-01-14 17:54:10,548 Epoch: [106][200/214]	Time 0.775s (0.847s)	Speed 41.3 samples/s	Data 0.000s (0.073s)	Loss 0.00019 (0.00021)	Accuracy 0.931 (0.915)
+2023-01-14 17:54:33,720 Test: [0/54]	Time 11.451 (11.451)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:54:59,394 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:54:59,394 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:54:59,395 | pose_hrnet | 91.034 | 86.079 | 78.079 | 80.226 | 92.757 | 88.471 | 85.320 | 93.259 | 86.261 | 88.013 |
+2023-01-14 17:54:59,397 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:55:13,117 Epoch: [107][0/214]	Time 12.173s (12.173s)	Speed 2.6 samples/s	Data 11.434s (11.434s)	Loss 0.00021 (0.00021)	Accuracy 0.931 (0.931)
+2023-01-14 17:56:31,500 Epoch: [107][100/214]	Time 0.777s (0.897s)	Speed 41.2 samples/s	Data 0.000s (0.129s)	Loss 0.00017 (0.00021)	Accuracy 0.956 (0.918)
+2023-01-14 17:57:50,851 Epoch: [107][200/214]	Time 0.761s (0.845s)	Speed 42.0 samples/s	Data 0.001s (0.073s)	Loss 0.00015 (0.00020)	Accuracy 0.947 (0.918)
+2023-01-14 17:58:14,001 Test: [0/54]	Time 11.525 (11.525)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 17:58:39,574 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 17:58:39,575 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 17:58:39,575 | pose_hrnet | 91.213 | 87.194 | 78.695 | 81.247 | 92.336 | 88.155 | 84.566 | 93.642 | 86.802 | 88.268 |
+2023-01-14 17:58:39,578 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 17:58:53,631 Epoch: [108][0/214]	Time 12.390s (12.390s)	Speed 2.6 samples/s	Data 11.637s (11.637s)	Loss 0.00016 (0.00016)	Accuracy 0.972 (0.972)
+2023-01-14 18:00:11,989 Epoch: [108][100/214]	Time 0.779s (0.898s)	Speed 41.1 samples/s	Data 0.000s (0.130s)	Loss 0.00018 (0.00020)	Accuracy 0.936 (0.918)
+2023-01-14 18:01:31,432 Epoch: [108][200/214]	Time 0.793s (0.847s)	Speed 40.4 samples/s	Data 0.000s (0.073s)	Loss 0.00023 (0.00020)	Accuracy 0.922 (0.915)
+2023-01-14 18:01:54,570 Test: [0/54]	Time 11.395 (11.395)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:02:20,235 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:02:20,236 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:02:20,236 | pose_hrnet | 91.990 | 87.916 | 78.991 | 82.251 | 93.421 | 89.107 | 85.545 | 94.792 | 87.416 | 89.203 |
+2023-01-14 18:02:20,239 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:02:34,061 Epoch: [109][0/214]	Time 12.206s (12.206s)	Speed 2.6 samples/s	Data 11.464s (11.464s)	Loss 0.00022 (0.00022)	Accuracy 0.897 (0.897)
+2023-01-14 18:03:52,441 Epoch: [109][100/214]	Time 0.784s (0.897s)	Speed 40.8 samples/s	Data 0.000s (0.129s)	Loss 0.00018 (0.00020)	Accuracy 0.929 (0.915)
+2023-01-14 18:05:11,761 Epoch: [109][200/214]	Time 0.763s (0.845s)	Speed 41.9 samples/s	Data 0.001s (0.073s)	Loss 0.00018 (0.00020)	Accuracy 0.944 (0.915)
+2023-01-14 18:05:34,712 Test: [0/54]	Time 11.337 (11.337)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:06:00,287 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:06:00,287 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:06:00,288 | pose_hrnet | 89.480 | 85.102 | 75.991 | 79.936 | 89.740 | 87.393 | 84.409 | 92.288 | 85.900 | 86.842 |
+2023-01-14 18:06:00,289 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:06:14,309 Epoch: [110][0/214]	Time 12.413s (12.413s)	Speed 2.6 samples/s	Data 11.653s (11.653s)	Loss 0.00017 (0.00017)	Accuracy 0.942 (0.942)
+2023-01-14 18:07:32,896 Epoch: [110][100/214]	Time 0.789s (0.901s)	Speed 40.6 samples/s	Data 0.000s (0.131s)	Loss 0.00018 (0.00020)	Accuracy 0.928 (0.919)
+2023-01-14 18:08:52,154 Epoch: [110][200/214]	Time 0.774s (0.847s)	Speed 41.3 samples/s	Data 0.000s (0.074s)	Loss 0.00021 (0.00020)	Accuracy 0.932 (0.918)
+2023-01-14 18:09:15,340 Test: [0/54]	Time 11.399 (11.399)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:09:40,858 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:09:40,859 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:09:40,859 | pose_hrnet | 89.480 | 84.742 | 77.958 | 79.395 | 90.225 | 87.580 | 84.189 | 91.539 | 84.053 | 86.444 |
+2023-01-14 18:09:40,862 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:09:54,720 Epoch: [111][0/214]	Time 12.093s (12.093s)	Speed 2.6 samples/s	Data 11.364s (11.364s)	Loss 0.00022 (0.00022)	Accuracy 0.891 (0.891)
+2023-01-14 18:11:13,257 Epoch: [111][100/214]	Time 0.779s (0.897s)	Speed 41.1 samples/s	Data 0.000s (0.128s)	Loss 0.00020 (0.00021)	Accuracy 0.928 (0.912)
+2023-01-14 18:12:32,531 Epoch: [111][200/214]	Time 0.793s (0.845s)	Speed 40.4 samples/s	Data 0.000s (0.072s)	Loss 0.00021 (0.00020)	Accuracy 0.932 (0.915)
+2023-01-14 18:12:55,575 Test: [0/54]	Time 11.316 (11.316)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:13:21,121 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:13:21,122 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:13:21,123 | pose_hrnet | 89.480 | 85.673 | 76.543 | 79.423 | 91.975 | 86.302 | 85.923 | 92.187 | 85.274 | 86.916 |
+2023-01-14 18:13:21,125 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:13:35,099 Epoch: [112][0/214]	Time 12.375s (12.375s)	Speed 2.6 samples/s	Data 11.615s (11.615s)	Loss 0.00017 (0.00017)	Accuracy 0.935 (0.935)
+2023-01-14 18:14:53,516 Epoch: [112][100/214]	Time 0.776s (0.899s)	Speed 41.2 samples/s	Data 0.000s (0.130s)	Loss 0.00023 (0.00021)	Accuracy 0.920 (0.912)
+2023-01-14 18:16:12,715 Epoch: [112][200/214]	Time 0.760s (0.846s)	Speed 42.1 samples/s	Data 0.000s (0.073s)	Loss 0.00017 (0.00021)	Accuracy 0.942 (0.915)
+2023-01-14 18:16:35,888 Test: [0/54]	Time 11.495 (11.495)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:17:01,628 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:17:01,629 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:17:01,629 | pose_hrnet | 90.436 | 85.506 | 79.012 | 80.378 | 91.853 | 87.266 | 84.642 | 93.176 | 86.584 | 87.833 |
+2023-01-14 18:17:01,632 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:17:15,755 Epoch: [113][0/214]	Time 12.525s (12.525s)	Speed 2.6 samples/s	Data 11.790s (11.790s)	Loss 0.00018 (0.00018)	Accuracy 0.924 (0.924)
+2023-01-14 18:18:34,460 Epoch: [113][100/214]	Time 0.780s (0.903s)	Speed 41.0 samples/s	Data 0.000s (0.133s)	Loss 0.00021 (0.00020)	Accuracy 0.921 (0.920)
+2023-01-14 18:19:53,784 Epoch: [113][200/214]	Time 0.782s (0.849s)	Speed 40.9 samples/s	Data 0.000s (0.074s)	Loss 0.00019 (0.00020)	Accuracy 0.924 (0.919)
+2023-01-14 18:20:16,801 Test: [0/54]	Time 11.367 (11.367)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:20:42,571 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:20:42,571 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:20:42,572 | pose_hrnet | 90.018 | 85.950 | 77.518 | 79.930 | 91.431 | 87.005 | 84.334 | 93.711 | 85.954 | 87.564 |
+2023-01-14 18:20:42,573 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:20:56,391 Epoch: [114][0/214]	Time 12.073s (12.073s)	Speed 2.7 samples/s	Data 11.326s (11.326s)	Loss 0.00021 (0.00021)	Accuracy 0.890 (0.890)
+2023-01-14 18:22:14,855 Epoch: [114][100/214]	Time 0.784s (0.896s)	Speed 40.8 samples/s	Data 0.000s (0.127s)	Loss 0.00021 (0.00020)	Accuracy 0.913 (0.916)
+2023-01-14 18:23:34,108 Epoch: [114][200/214]	Time 0.783s (0.845s)	Speed 40.9 samples/s	Data 0.000s (0.072s)	Loss 0.00018 (0.00020)	Accuracy 0.931 (0.920)
+2023-01-14 18:23:57,115 Test: [0/54]	Time 11.372 (11.372)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:24:22,794 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:24:22,795 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:24:22,795 | pose_hrnet | 91.034 | 86.744 | 78.194 | 79.706 | 91.310 | 87.584 | 83.881 | 93.478 | 86.260 | 87.722 |
+2023-01-14 18:24:22,798 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:24:36,957 Epoch: [115][0/214]	Time 12.582s (12.582s)	Speed 2.5 samples/s	Data 11.829s (11.829s)	Loss 0.00020 (0.00020)	Accuracy 0.914 (0.914)
+2023-01-14 18:25:55,562 Epoch: [115][100/214]	Time 0.816s (0.903s)	Speed 39.2 samples/s	Data 0.000s (0.133s)	Loss 0.00018 (0.00021)	Accuracy 0.949 (0.918)
+2023-01-14 18:27:14,904 Epoch: [115][200/214]	Time 0.778s (0.848s)	Speed 41.1 samples/s	Data 0.000s (0.075s)	Loss 0.00019 (0.00020)	Accuracy 0.935 (0.919)
+2023-01-14 18:27:38,078 Test: [0/54]	Time 11.478 (11.478)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:28:03,554 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:28:03,554 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:28:03,555 | pose_hrnet | 91.333 | 86.885 | 77.393 | 78.615 | 92.880 | 88.219 | 85.701 | 93.111 | 86.739 | 87.930 |
+2023-01-14 18:28:03,557 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:28:17,784 Epoch: [116][0/214]	Time 12.498s (12.498s)	Speed 2.6 samples/s	Data 11.749s (11.749s)	Loss 0.00021 (0.00021)	Accuracy 0.925 (0.925)
+2023-01-14 18:29:36,350 Epoch: [116][100/214]	Time 0.818s (0.902s)	Speed 39.1 samples/s	Data 0.000s (0.132s)	Loss 0.00020 (0.00020)	Accuracy 0.928 (0.919)
+2023-01-14 18:30:55,941 Epoch: [116][200/214]	Time 0.770s (0.849s)	Speed 41.6 samples/s	Data 0.000s (0.074s)	Loss 0.00020 (0.00020)	Accuracy 0.889 (0.921)
+2023-01-14 18:31:18,967 Test: [0/54]	Time 11.254 (11.254)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:31:44,659 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:31:44,659 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:31:44,660 | pose_hrnet | 90.436 | 87.196 | 77.035 | 79.571 | 92.154 | 88.791 | 86.905 | 93.979 | 86.572 | 88.152 |
+2023-01-14 18:31:44,662 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:31:58,732 Epoch: [117][0/214]	Time 12.406s (12.406s)	Speed 2.6 samples/s	Data 11.656s (11.656s)	Loss 0.00019 (0.00019)	Accuracy 0.909 (0.909)
+2023-01-14 18:33:17,369 Epoch: [117][100/214]	Time 0.761s (0.901s)	Speed 42.0 samples/s	Data 0.001s (0.132s)	Loss 0.00020 (0.00020)	Accuracy 0.887 (0.915)
+2023-01-14 18:34:36,951 Epoch: [117][200/214]	Time 0.777s (0.849s)	Speed 41.2 samples/s	Data 0.000s (0.074s)	Loss 0.00016 (0.00020)	Accuracy 0.937 (0.919)
+2023-01-14 18:35:00,129 Test: [0/54]	Time 11.461 (11.461)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:35:25,865 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:35:25,865 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:35:25,866 | pose_hrnet | 91.632 | 87.516 | 77.140 | 80.448 | 92.998 | 88.536 | 86.982 | 93.545 | 86.807 | 88.332 |
+2023-01-14 18:35:25,868 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:35:39,897 Epoch: [118][0/214]	Time 12.444s (12.444s)	Speed 2.6 samples/s	Data 11.703s (11.703s)	Loss 0.00018 (0.00018)	Accuracy 0.958 (0.958)
+2023-01-14 18:36:58,242 Epoch: [118][100/214]	Time 0.781s (0.899s)	Speed 41.0 samples/s	Data 0.000s (0.132s)	Loss 0.00015 (0.00019)	Accuracy 0.952 (0.924)
+2023-01-14 18:38:17,459 Epoch: [118][200/214]	Time 0.809s (0.846s)	Speed 39.6 samples/s	Data 0.001s (0.074s)	Loss 0.00018 (0.00019)	Accuracy 0.948 (0.924)
+2023-01-14 18:38:40,400 Test: [0/54]	Time 11.350 (11.350)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:39:06,017 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:39:06,017 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:39:06,018 | pose_hrnet | 91.154 | 86.683 | 77.832 | 80.537 | 93.180 | 89.174 | 87.439 | 94.001 | 87.295 | 88.481 |
+2023-01-14 18:39:06,020 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:39:20,072 Epoch: [119][0/214]	Time 12.395s (12.395s)	Speed 2.6 samples/s	Data 11.665s (11.665s)	Loss 0.00021 (0.00021)	Accuracy 0.900 (0.900)
+2023-01-14 18:40:38,519 Epoch: [119][100/214]	Time 0.798s (0.899s)	Speed 40.1 samples/s	Data 0.000s (0.131s)	Loss 0.00019 (0.00019)	Accuracy 0.935 (0.923)
+2023-01-14 18:41:57,650 Epoch: [119][200/214]	Time 0.771s (0.846s)	Speed 41.5 samples/s	Data 0.000s (0.074s)	Loss 0.00021 (0.00019)	Accuracy 0.942 (0.925)
+2023-01-14 18:42:20,819 Test: [0/54]	Time 11.559 (11.559)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:42:46,446 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:42:46,446 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:42:46,447 | pose_hrnet | 91.871 | 87.108 | 78.630 | 80.251 | 94.326 | 90.255 | 88.120 | 94.079 | 88.436 | 89.216 |
+2023-01-14 18:42:46,449 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:43:00,226 Epoch: [120][0/214]	Time 12.201s (12.201s)	Speed 2.6 samples/s	Data 11.474s (11.474s)	Loss 0.00019 (0.00019)	Accuracy 0.932 (0.932)
+2023-01-14 18:44:19,081 Epoch: [120][100/214]	Time 0.775s (0.902s)	Speed 41.3 samples/s	Data 0.000s (0.129s)	Loss 0.00022 (0.00019)	Accuracy 0.879 (0.922)
+2023-01-14 18:45:38,616 Epoch: [120][200/214]	Time 0.779s (0.849s)	Speed 41.1 samples/s	Data 0.000s (0.073s)	Loss 0.00022 (0.00019)	Accuracy 0.887 (0.922)
+2023-01-14 18:46:01,772 Test: [0/54]	Time 11.472 (11.472)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:46:27,353 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:46:27,353 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:46:27,354 | pose_hrnet | 91.692 | 87.449 | 78.995 | 81.280 | 94.568 | 90.767 | 86.911 | 95.245 | 87.459 | 89.291 |
+2023-01-14 18:46:27,356 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:46:41,175 Epoch: [121][0/214]	Time 12.207s (12.207s)	Speed 2.6 samples/s	Data 11.481s (11.481s)	Loss 0.00019 (0.00019)	Accuracy 0.934 (0.934)
+2023-01-14 18:47:59,810 Epoch: [121][100/214]	Time 0.809s (0.899s)	Speed 39.6 samples/s	Data 0.000s (0.129s)	Loss 0.00022 (0.00019)	Accuracy 0.908 (0.927)
+2023-01-14 18:49:19,523 Epoch: [121][200/214]	Time 0.791s (0.849s)	Speed 40.5 samples/s	Data 0.000s (0.073s)	Loss 0.00019 (0.00019)	Accuracy 0.940 (0.926)
+2023-01-14 18:49:42,728 Test: [0/54]	Time 11.449 (11.449)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:50:08,382 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:50:08,383 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:50:08,383 | pose_hrnet | 90.616 | 86.910 | 77.600 | 81.756 | 94.085 | 89.617 | 87.740 | 94.297 | 88.258 | 89.004 |
+2023-01-14 18:50:08,385 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:50:22,356 Epoch: [122][0/214]	Time 12.427s (12.427s)	Speed 2.6 samples/s	Data 11.680s (11.680s)	Loss 0.00017 (0.00017)	Accuracy 0.961 (0.961)
+2023-01-14 18:51:41,071 Epoch: [122][100/214]	Time 0.803s (0.902s)	Speed 39.9 samples/s	Data 0.000s (0.132s)	Loss 0.00018 (0.00020)	Accuracy 0.938 (0.921)
+2023-01-14 18:53:00,267 Epoch: [122][200/214]	Time 0.787s (0.847s)	Speed 40.7 samples/s	Data 0.000s (0.074s)	Loss 0.00021 (0.00020)	Accuracy 0.907 (0.924)
+2023-01-14 18:53:23,165 Test: [0/54]	Time 11.358 (11.358)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:53:48,785 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:53:48,785 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:53:48,786 | pose_hrnet | 91.333 | 86.489 | 77.830 | 79.803 | 93.543 | 89.743 | 85.394 | 94.487 | 87.357 | 88.592 |
+2023-01-14 18:53:48,788 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:54:02,813 Epoch: [123][0/214]	Time 12.402s (12.402s)	Speed 2.6 samples/s	Data 11.655s (11.655s)	Loss 0.00022 (0.00022)	Accuracy 0.870 (0.870)
+2023-01-14 18:55:21,064 Epoch: [123][100/214]	Time 0.777s (0.898s)	Speed 41.2 samples/s	Data 0.001s (0.131s)	Loss 0.00022 (0.00019)	Accuracy 0.920 (0.926)
+2023-01-14 18:56:40,173 Epoch: [123][200/214]	Time 0.783s (0.845s)	Speed 40.9 samples/s	Data 0.000s (0.074s)	Loss 0.00020 (0.00019)	Accuracy 0.911 (0.925)
+2023-01-14 18:57:03,261 Test: [0/54]	Time 11.535 (11.535)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 18:57:28,880 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 18:57:28,881 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 18:57:28,881 | pose_hrnet | 91.512 | 87.523 | 79.117 | 81.420 | 94.508 | 90.255 | 86.829 | 95.008 | 87.881 | 89.300 |
+2023-01-14 18:57:28,883 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 18:57:42,571 Epoch: [124][0/214]	Time 12.116s (12.116s)	Speed 2.6 samples/s	Data 11.382s (11.382s)	Loss 0.00019 (0.00019)	Accuracy 0.937 (0.937)
+2023-01-14 18:59:01,162 Epoch: [124][100/214]	Time 0.791s (0.898s)	Speed 40.5 samples/s	Data 0.000s (0.129s)	Loss 0.00021 (0.00020)	Accuracy 0.910 (0.923)
+2023-01-14 19:00:20,608 Epoch: [124][200/214]	Time 0.771s (0.847s)	Speed 41.5 samples/s	Data 0.000s (0.073s)	Loss 0.00020 (0.00019)	Accuracy 0.929 (0.925)
+2023-01-14 19:00:44,032 Test: [0/54]	Time 11.632 (11.632)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:01:09,727 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:01:09,728 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:01:09,728 | pose_hrnet | 90.855 | 86.024 | 79.683 | 81.177 | 93.482 | 89.432 | 85.092 | 93.814 | 87.332 | 88.439 |
+2023-01-14 19:01:09,731 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:01:23,786 Epoch: [125][0/214]	Time 12.368s (12.368s)	Speed 2.6 samples/s	Data 11.632s (11.632s)	Loss 0.00019 (0.00019)	Accuracy 0.934 (0.934)
+2023-01-14 19:02:42,659 Epoch: [125][100/214]	Time 0.770s (0.903s)	Speed 41.6 samples/s	Data 0.000s (0.132s)	Loss 0.00016 (0.00020)	Accuracy 0.940 (0.922)
+2023-01-14 19:04:01,982 Epoch: [125][200/214]	Time 0.778s (0.849s)	Speed 41.1 samples/s	Data 0.000s (0.074s)	Loss 0.00016 (0.00019)	Accuracy 0.943 (0.925)
+2023-01-14 19:04:24,985 Test: [0/54]	Time 11.354 (11.354)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:04:50,509 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:04:50,510 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:04:50,510 | pose_hrnet | 90.436 | 84.887 | 77.401 | 80.116 | 94.026 | 90.322 | 87.133 | 92.915 | 86.983 | 88.022 |
+2023-01-14 19:04:50,512 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:05:04,122 Epoch: [126][0/214]	Time 12.011s (12.011s)	Speed 2.7 samples/s	Data 11.268s (11.268s)	Loss 0.00016 (0.00016)	Accuracy 0.953 (0.953)
+2023-01-14 19:06:22,679 Epoch: [126][100/214]	Time 0.779s (0.897s)	Speed 41.1 samples/s	Data 0.000s (0.127s)	Loss 0.00014 (0.00018)	Accuracy 0.951 (0.931)
+2023-01-14 19:07:41,990 Epoch: [126][200/214]	Time 0.776s (0.845s)	Speed 41.2 samples/s	Data 0.000s (0.072s)	Loss 0.00018 (0.00018)	Accuracy 0.959 (0.930)
+2023-01-14 19:08:04,913 Test: [0/54]	Time 11.268 (11.268)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:08:30,531 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:08:30,532 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:08:30,533 | pose_hrnet | 91.751 | 87.255 | 80.178 | 81.152 | 93.542 | 91.017 | 86.831 | 94.414 | 89.050 | 89.568 |
+2023-01-14 19:08:30,535 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:08:44,428 Epoch: [127][0/214]	Time 12.235s (12.235s)	Speed 2.6 samples/s	Data 11.495s (11.495s)	Loss 0.00017 (0.00017)	Accuracy 0.933 (0.933)
+2023-01-14 19:10:03,260 Epoch: [127][100/214]	Time 0.776s (0.902s)	Speed 41.2 samples/s	Data 0.000s (0.130s)	Loss 0.00021 (0.00018)	Accuracy 0.887 (0.930)
+2023-01-14 19:11:22,714 Epoch: [127][200/214]	Time 0.789s (0.848s)	Speed 40.6 samples/s	Data 0.000s (0.073s)	Loss 0.00018 (0.00018)	Accuracy 0.925 (0.931)
+2023-01-14 19:11:45,845 Test: [0/54]	Time 11.474 (11.474)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:12:11,601 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:12:11,601 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:12:11,602 | pose_hrnet | 90.855 | 87.874 | 78.817 | 82.063 | 93.843 | 91.403 | 87.285 | 94.826 | 88.384 | 89.476 |
+2023-01-14 19:12:11,604 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:12:25,506 Epoch: [128][0/214]	Time 12.356s (12.356s)	Speed 2.6 samples/s	Data 11.609s (11.609s)	Loss 0.00020 (0.00020)	Accuracy 0.917 (0.917)
+2023-01-14 19:13:44,097 Epoch: [128][100/214]	Time 0.778s (0.900s)	Speed 41.1 samples/s	Data 0.000s (0.131s)	Loss 0.00019 (0.00019)	Accuracy 0.927 (0.927)
+2023-01-14 19:15:03,475 Epoch: [128][200/214]	Time 0.784s (0.847s)	Speed 40.8 samples/s	Data 0.000s (0.074s)	Loss 0.00019 (0.00019)	Accuracy 0.941 (0.928)
+2023-01-14 19:15:26,275 Test: [0/54]	Time 11.269 (11.269)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:15:51,818 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:15:51,819 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:15:51,819 | pose_hrnet | 92.289 | 87.716 | 78.874 | 82.079 | 93.543 | 90.575 | 86.912 | 95.579 | 89.185 | 89.790 |
+2023-01-14 19:15:51,822 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:16:06,143 Epoch: [129][0/214]	Time 12.079s (12.079s)	Speed 2.6 samples/s	Data 11.336s (11.336s)	Loss 0.00021 (0.00021)	Accuracy 0.896 (0.896)
+2023-01-14 19:17:24,841 Epoch: [129][100/214]	Time 0.790s (0.899s)	Speed 40.5 samples/s	Data 0.000s (0.128s)	Loss 0.00017 (0.00019)	Accuracy 0.910 (0.929)
+2023-01-14 19:18:44,331 Epoch: [129][200/214]	Time 0.774s (0.847s)	Speed 41.3 samples/s	Data 0.000s (0.072s)	Loss 0.00018 (0.00018)	Accuracy 0.930 (0.930)
+2023-01-14 19:19:07,584 Test: [0/54]	Time 11.554 (11.554)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:19:33,120 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:19:33,121 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:19:33,121 | pose_hrnet | 69.994 | 69.430 | 60.642 | 60.992 | 74.292 | 71.521 | 64.646 | 72.029 | 68.183 | 68.635 |
+2023-01-14 19:19:33,123 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:19:46,749 Epoch: [130][0/214]	Time 11.909s (11.909s)	Speed 2.7 samples/s	Data 11.169s (11.169s)	Loss 0.00017 (0.00017)	Accuracy 0.899 (0.899)
+2023-01-14 19:21:05,433 Epoch: [130][100/214]	Time 0.783s (0.897s)	Speed 40.9 samples/s	Data 0.000s (0.126s)	Loss 0.00024 (0.00020)	Accuracy 0.830 (0.918)
+2023-01-14 19:22:24,624 Epoch: [130][200/214]	Time 0.774s (0.845s)	Speed 41.3 samples/s	Data 0.000s (0.071s)	Loss 0.00021 (0.00020)	Accuracy 0.939 (0.921)
+2023-01-14 19:22:47,695 Test: [0/54]	Time 11.446 (11.446)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:23:13,376 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:23:13,377 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:23:13,377 | pose_hrnet | 93.007 | 86.900 | 79.003 | 82.396 | 94.449 | 90.956 | 88.194 | 96.178 | 88.713 | 90.059 |
+2023-01-14 19:23:13,379 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:23:27,757 Epoch: [131][0/214]	Time 12.235s (12.235s)	Speed 2.6 samples/s	Data 11.494s (11.494s)	Loss 0.00020 (0.00020)	Accuracy 0.887 (0.887)
+2023-01-14 19:24:46,540 Epoch: [131][100/214]	Time 0.789s (0.901s)	Speed 40.6 samples/s	Data 0.000s (0.130s)	Loss 0.00021 (0.00019)	Accuracy 0.942 (0.931)
+2023-01-14 19:26:06,166 Epoch: [131][200/214]	Time 0.789s (0.849s)	Speed 40.6 samples/s	Data 0.000s (0.074s)	Loss 0.00019 (0.00018)	Accuracy 0.921 (0.932)
+2023-01-14 19:26:29,281 Test: [0/54]	Time 11.426 (11.426)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:26:54,940 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:26:54,941 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:26:54,942 | pose_hrnet | 92.767 | 87.237 | 78.875 | 82.449 | 94.207 | 91.657 | 87.969 | 95.333 | 88.641 | 89.975 |
+2023-01-14 19:26:54,944 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:27:08,932 Epoch: [132][0/214]	Time 12.296s (12.296s)	Speed 2.6 samples/s	Data 11.542s (11.542s)	Loss 0.00022 (0.00022)	Accuracy 0.885 (0.885)
+2023-01-14 19:28:27,695 Epoch: [132][100/214]	Time 0.817s (0.902s)	Speed 39.2 samples/s	Data 0.000s (0.130s)	Loss 0.00015 (0.00018)	Accuracy 0.960 (0.932)
+2023-01-14 19:29:47,062 Epoch: [132][200/214]	Time 0.774s (0.848s)	Speed 41.3 samples/s	Data 0.000s (0.073s)	Loss 0.00019 (0.00018)	Accuracy 0.954 (0.933)
+2023-01-14 19:30:10,240 Test: [0/54]	Time 11.545 (11.545)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:30:35,926 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:30:35,926 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:30:35,927 | pose_hrnet | 92.708 | 87.722 | 80.046 | 81.481 | 93.784 | 89.871 | 85.628 | 95.034 | 89.200 | 89.628 |
+2023-01-14 19:30:35,929 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:30:49,657 Epoch: [133][0/214]	Time 12.052s (12.052s)	Speed 2.7 samples/s	Data 11.331s (11.331s)	Loss 0.00017 (0.00017)	Accuracy 0.943 (0.943)
+2023-01-14 19:32:08,244 Epoch: [133][100/214]	Time 0.804s (0.897s)	Speed 39.8 samples/s	Data 0.000s (0.128s)	Loss 0.00020 (0.00018)	Accuracy 0.930 (0.933)
+2023-01-14 19:33:27,750 Epoch: [133][200/214]	Time 0.762s (0.846s)	Speed 42.0 samples/s	Data 0.000s (0.073s)	Loss 0.00018 (0.00018)	Accuracy 0.939 (0.933)
+2023-01-14 19:33:51,023 Test: [0/54]	Time 11.533 (11.533)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:34:16,688 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:34:16,689 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:34:16,689 | pose_hrnet | 93.007 | 87.784 | 78.750 | 81.657 | 93.543 | 89.558 | 87.137 | 95.686 | 88.543 | 89.726 |
+2023-01-14 19:34:16,691 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:34:30,493 Epoch: [134][0/214]	Time 12.210s (12.210s)	Speed 2.6 samples/s	Data 11.472s (11.472s)	Loss 0.00020 (0.00020)	Accuracy 0.944 (0.944)
+2023-01-14 19:35:49,342 Epoch: [134][100/214]	Time 0.774s (0.902s)	Speed 41.3 samples/s	Data 0.000s (0.129s)	Loss 0.00018 (0.00018)	Accuracy 0.952 (0.935)
+2023-01-14 19:37:08,756 Epoch: [134][200/214]	Time 0.776s (0.848s)	Speed 41.2 samples/s	Data 0.000s (0.073s)	Loss 0.00017 (0.00018)	Accuracy 0.950 (0.936)
+2023-01-14 19:37:31,776 Test: [0/54]	Time 11.337 (11.337)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:37:57,571 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:37:57,572 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:37:57,572 | pose_hrnet | 92.528 | 88.470 | 79.671 | 81.236 | 93.059 | 89.871 | 86.232 | 95.306 | 88.928 | 89.739 |
+2023-01-14 19:37:57,575 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:38:11,044 Epoch: [135][0/214]	Time 11.722s (11.722s)	Speed 2.7 samples/s	Data 10.995s (10.995s)	Loss 0.00016 (0.00016)	Accuracy 0.963 (0.963)
+2023-01-14 19:39:29,691 Epoch: [135][100/214]	Time 0.787s (0.895s)	Speed 40.7 samples/s	Data 0.001s (0.125s)	Loss 0.00020 (0.00018)	Accuracy 0.942 (0.931)
+2023-01-14 19:40:49,281 Epoch: [135][200/214]	Time 0.777s (0.846s)	Speed 41.2 samples/s	Data 0.001s (0.071s)	Loss 0.00016 (0.00018)	Accuracy 0.965 (0.933)
+2023-01-14 19:41:12,402 Test: [0/54]	Time 11.494 (11.494)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:41:37,977 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:41:37,978 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:41:37,978 | pose_hrnet | 92.767 | 87.535 | 79.250 | 81.703 | 93.423 | 90.450 | 87.437 | 96.377 | 88.986 | 89.994 |
+2023-01-14 19:41:37,980 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:41:51,968 Epoch: [136][0/214]	Time 12.296s (12.296s)	Speed 2.6 samples/s	Data 11.557s (11.557s)	Loss 0.00017 (0.00017)	Accuracy 0.939 (0.939)
+2023-01-14 19:43:10,579 Epoch: [136][100/214]	Time 0.786s (0.900s)	Speed 40.7 samples/s	Data 0.001s (0.130s)	Loss 0.00021 (0.00018)	Accuracy 0.928 (0.934)
+2023-01-14 19:44:29,850 Epoch: [136][200/214]	Time 0.758s (0.847s)	Speed 42.2 samples/s	Data 0.000s (0.073s)	Loss 0.00017 (0.00018)	Accuracy 0.936 (0.935)
+2023-01-14 19:44:53,018 Test: [0/54]	Time 11.504 (11.504)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:45:18,661 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:45:18,662 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:45:18,662 | pose_hrnet | 92.827 | 88.001 | 80.845 | 81.940 | 93.482 | 91.147 | 89.104 | 95.752 | 88.822 | 90.198 |
+2023-01-14 19:45:18,665 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:45:33,534 Epoch: [137][0/214]	Time 12.532s (12.532s)	Speed 2.6 samples/s	Data 11.788s (11.788s)	Loss 0.00018 (0.00018)	Accuracy 0.941 (0.941)
+2023-01-14 19:46:52,040 Epoch: [137][100/214]	Time 0.806s (0.901s)	Speed 39.7 samples/s	Data 0.001s (0.133s)	Loss 0.00018 (0.00018)	Accuracy 0.933 (0.936)
+2023-01-14 19:48:11,016 Epoch: [137][200/214]	Time 0.791s (0.846s)	Speed 40.5 samples/s	Data 0.000s (0.075s)	Loss 0.00019 (0.00018)	Accuracy 0.914 (0.936)
+2023-01-14 19:48:34,145 Test: [0/54]	Time 11.378 (11.378)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:48:59,807 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:48:59,807 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:48:59,808 | pose_hrnet | 92.947 | 88.028 | 78.382 | 81.826 | 94.208 | 90.374 | 88.347 | 95.787 | 88.510 | 89.911 |
+2023-01-14 19:48:59,811 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:49:13,821 Epoch: [138][0/214]	Time 12.376s (12.376s)	Speed 2.6 samples/s	Data 11.606s (11.606s)	Loss 0.00020 (0.00020)	Accuracy 0.883 (0.883)
+2023-01-14 19:50:32,538 Epoch: [138][100/214]	Time 0.774s (0.902s)	Speed 41.3 samples/s	Data 0.000s (0.131s)	Loss 0.00019 (0.00017)	Accuracy 0.879 (0.937)
+2023-01-14 19:51:51,979 Epoch: [138][200/214]	Time 0.769s (0.848s)	Speed 41.6 samples/s	Data 0.000s (0.074s)	Loss 0.00016 (0.00017)	Accuracy 0.954 (0.940)
+2023-01-14 19:52:15,062 Test: [0/54]	Time 11.509 (11.509)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:52:40,656 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:52:40,656 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:52:40,657 | pose_hrnet | 91.931 | 87.321 | 79.434 | 81.022 | 93.301 | 90.061 | 87.135 | 95.835 | 89.103 | 89.772 |
+2023-01-14 19:52:40,659 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:52:54,042 Epoch: [139][0/214]	Time 11.795s (11.795s)	Speed 2.7 samples/s	Data 11.047s (11.047s)	Loss 0.00017 (0.00017)	Accuracy 0.952 (0.952)
+2023-01-14 19:54:12,621 Epoch: [139][100/214]	Time 0.781s (0.895s)	Speed 41.0 samples/s	Data 0.001s (0.125s)	Loss 0.00015 (0.00017)	Accuracy 0.955 (0.936)
+2023-01-14 19:55:32,014 Epoch: [139][200/214]	Time 0.798s (0.845s)	Speed 40.1 samples/s	Data 0.001s (0.070s)	Loss 0.00020 (0.00017)	Accuracy 0.923 (0.938)
+2023-01-14 19:55:55,178 Test: [0/54]	Time 11.415 (11.415)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 19:56:20,934 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 19:56:20,935 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 19:56:20,936 | pose_hrnet | 84.818 | 81.265 | 72.333 | 72.748 | 86.363 | 83.056 | 76.229 | 85.495 | 81.755 | 81.557 |
+2023-01-14 19:56:20,938 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 19:56:34,890 Epoch: [140][0/214]	Time 12.393s (12.393s)	Speed 2.6 samples/s	Data 11.649s (11.649s)	Loss 0.00015 (0.00015)	Accuracy 0.958 (0.958)
+2023-01-14 19:57:53,248 Epoch: [140][100/214]	Time 0.759s (0.899s)	Speed 42.2 samples/s	Data 0.000s (0.131s)	Loss 0.00017 (0.00017)	Accuracy 0.944 (0.941)
+2023-01-14 19:59:12,468 Epoch: [140][200/214]	Time 0.779s (0.846s)	Speed 41.1 samples/s	Data 0.001s (0.074s)	Loss 0.00017 (0.00017)	Accuracy 0.955 (0.940)
+2023-01-14 19:59:35,461 Test: [0/54]	Time 11.341 (11.341)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:00:01,084 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:00:01,085 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:00:01,085 | pose_hrnet | 92.050 | 87.683 | 79.373 | 82.654 | 94.026 | 90.063 | 87.812 | 95.047 | 89.379 | 89.874 |
+2023-01-14 20:00:01,088 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:00:15,103 Epoch: [141][0/214]	Time 12.410s (12.410s)	Speed 2.6 samples/s	Data 11.647s (11.647s)	Loss 0.00014 (0.00014)	Accuracy 0.958 (0.958)
+2023-01-14 20:01:33,857 Epoch: [141][100/214]	Time 0.775s (0.903s)	Speed 41.3 samples/s	Data 0.000s (0.131s)	Loss 0.00017 (0.00017)	Accuracy 0.933 (0.938)
+2023-01-14 20:02:53,179 Epoch: [141][200/214]	Time 0.768s (0.848s)	Speed 41.7 samples/s	Data 0.000s (0.073s)	Loss 0.00019 (0.00017)	Accuracy 0.906 (0.940)
+2023-01-14 20:03:16,569 Test: [0/54]	Time 11.681 (11.681)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:03:42,195 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:03:42,196 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:03:42,196 | pose_hrnet | 92.947 | 88.442 | 80.722 | 82.219 | 93.060 | 89.109 | 87.517 | 95.685 | 88.943 | 89.846 |
+2023-01-14 20:03:42,199 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:03:57,296 Epoch: [142][0/214]	Time 13.486s (13.486s)	Speed 2.4 samples/s	Data 12.745s (12.745s)	Loss 0.00015 (0.00015)	Accuracy 0.964 (0.964)
+2023-01-14 20:05:15,928 Epoch: [142][100/214]	Time 0.791s (0.912s)	Speed 40.5 samples/s	Data 0.000s (0.142s)	Loss 0.00018 (0.00017)	Accuracy 0.937 (0.940)
+2023-01-14 20:06:35,273 Epoch: [142][200/214]	Time 0.778s (0.853s)	Speed 41.1 samples/s	Data 0.000s (0.079s)	Loss 0.00021 (0.00017)	Accuracy 0.911 (0.940)
+2023-01-14 20:06:58,334 Test: [0/54]	Time 11.484 (11.484)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:07:24,037 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:07:24,037 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:07:24,038 | pose_hrnet | 93.126 | 88.444 | 80.546 | 82.396 | 93.181 | 90.184 | 87.287 | 96.157 | 89.052 | 90.174 |
+2023-01-14 20:07:24,040 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:07:38,343 Epoch: [143][0/214]	Time 12.679s (12.679s)	Speed 2.5 samples/s	Data 11.947s (11.947s)	Loss 0.00015 (0.00015)	Accuracy 0.936 (0.936)
+2023-01-14 20:08:57,019 Epoch: [143][100/214]	Time 0.809s (0.904s)	Speed 39.6 samples/s	Data 0.000s (0.134s)	Loss 0.00019 (0.00017)	Accuracy 0.937 (0.942)
+2023-01-14 20:10:16,428 Epoch: [143][200/214]	Time 0.778s (0.850s)	Speed 41.1 samples/s	Data 0.001s (0.075s)	Loss 0.00014 (0.00017)	Accuracy 0.982 (0.942)
+2023-01-14 20:10:39,268 Test: [0/54]	Time 11.249 (11.249)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:11:04,999 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:11:05,000 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:11:05,000 | pose_hrnet | 92.887 | 87.293 | 80.417 | 82.699 | 93.663 | 90.320 | 87.817 | 95.577 | 89.458 | 90.110 |
+2023-01-14 20:11:05,002 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:11:19,052 Epoch: [144][0/214]	Time 12.387s (12.387s)	Speed 2.6 samples/s	Data 11.661s (11.661s)	Loss 0.00016 (0.00016)	Accuracy 0.964 (0.964)
+2023-01-14 20:12:37,824 Epoch: [144][100/214]	Time 0.780s (0.903s)	Speed 41.0 samples/s	Data 0.000s (0.131s)	Loss 0.00014 (0.00017)	Accuracy 0.979 (0.941)
+2023-01-14 20:13:57,361 Epoch: [144][200/214]	Time 0.783s (0.849s)	Speed 40.9 samples/s	Data 0.000s (0.074s)	Loss 0.00016 (0.00017)	Accuracy 0.944 (0.940)
+2023-01-14 20:14:20,409 Test: [0/54]	Time 11.528 (11.528)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:14:46,121 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:14:46,121 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:14:46,122 | pose_hrnet | 92.469 | 88.074 | 80.833 | 82.441 | 94.087 | 91.467 | 87.437 | 95.630 | 89.138 | 90.253 |
+2023-01-14 20:14:46,123 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:15:00,026 Epoch: [145][0/214]	Time 11.693s (11.693s)	Speed 2.7 samples/s	Data 10.944s (10.944s)	Loss 0.00021 (0.00021)	Accuracy 0.874 (0.874)
+2023-01-14 20:16:18,564 Epoch: [145][100/214]	Time 0.775s (0.893s)	Speed 41.3 samples/s	Data 0.001s (0.124s)	Loss 0.00017 (0.00017)	Accuracy 0.943 (0.941)
+2023-01-14 20:17:38,027 Epoch: [145][200/214]	Time 0.795s (0.844s)	Speed 40.3 samples/s	Data 0.000s (0.070s)	Loss 0.00020 (0.00017)	Accuracy 0.936 (0.941)
+2023-01-14 20:18:01,056 Test: [0/54]	Time 11.367 (11.367)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:18:26,636 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:18:26,636 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:18:26,636 | pose_hrnet | 92.170 | 86.746 | 78.878 | 82.367 | 92.879 | 90.002 | 86.603 | 95.254 | 89.568 | 89.601 |
+2023-01-14 20:18:26,638 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:18:39,954 Epoch: [146][0/214]	Time 11.721s (11.721s)	Speed 2.7 samples/s	Data 11.007s (11.007s)	Loss 0.00020 (0.00020)	Accuracy 0.932 (0.932)
+2023-01-14 20:19:58,643 Epoch: [146][100/214]	Time 0.804s (0.895s)	Speed 39.8 samples/s	Data 0.001s (0.125s)	Loss 0.00018 (0.00017)	Accuracy 0.942 (0.944)
+2023-01-14 20:21:18,092 Epoch: [146][200/214]	Time 0.761s (0.845s)	Speed 42.0 samples/s	Data 0.000s (0.071s)	Loss 0.00017 (0.00017)	Accuracy 0.940 (0.941)
+2023-01-14 20:21:41,017 Test: [0/54]	Time 11.242 (11.242)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:22:06,637 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:22:06,637 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:22:06,638 | pose_hrnet | 85.296 | 86.167 | 76.894 | 80.718 | 89.199 | 86.492 | 82.590 | 92.103 | 88.174 | 86.703 |
+2023-01-14 20:22:06,640 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:22:20,913 Epoch: [147][0/214]	Time 12.582s (12.582s)	Speed 2.5 samples/s	Data 11.856s (11.856s)	Loss 0.00016 (0.00016)	Accuracy 0.948 (0.948)
+2023-01-14 20:23:39,832 Epoch: [147][100/214]	Time 0.781s (0.906s)	Speed 41.0 samples/s	Data 0.000s (0.135s)	Loss 0.00018 (0.00017)	Accuracy 0.942 (0.944)
+2023-01-14 20:24:59,160 Epoch: [147][200/214]	Time 0.763s (0.850s)	Speed 41.9 samples/s	Data 0.000s (0.076s)	Loss 0.00014 (0.00017)	Accuracy 0.963 (0.943)
+2023-01-14 20:25:22,306 Test: [0/54]	Time 11.317 (11.317)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:25:47,923 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:25:47,923 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:25:47,924 | pose_hrnet | 92.528 | 87.944 | 80.302 | 82.358 | 94.510 | 90.508 | 87.054 | 96.203 | 89.315 | 90.378 |
+2023-01-14 20:25:47,926 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:26:02,158 Epoch: [148][0/214]	Time 12.106s (12.106s)	Speed 2.6 samples/s	Data 11.374s (11.374s)	Loss 0.00017 (0.00017)	Accuracy 0.926 (0.926)
+2023-01-14 20:27:20,576 Epoch: [148][100/214]	Time 0.776s (0.896s)	Speed 41.2 samples/s	Data 0.000s (0.128s)	Loss 0.00016 (0.00017)	Accuracy 0.920 (0.943)
+2023-01-14 20:28:40,108 Epoch: [148][200/214]	Time 0.794s (0.846s)	Speed 40.3 samples/s	Data 0.000s (0.072s)	Loss 0.00014 (0.00017)	Accuracy 0.980 (0.943)
+2023-01-14 20:29:03,234 Test: [0/54]	Time 11.579 (11.579)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:29:28,730 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:29:28,730 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:29:28,731 | pose_hrnet | 91.273 | 85.719 | 76.356 | 79.226 | 91.431 | 89.300 | 83.650 | 94.443 | 87.617 | 88.180 |
+2023-01-14 20:29:28,733 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:29:42,328 Epoch: [149][0/214]	Time 12.031s (12.031s)	Speed 2.7 samples/s	Data 11.305s (11.305s)	Loss 0.00019 (0.00019)	Accuracy 0.924 (0.924)
+2023-01-14 20:31:01,130 Epoch: [149][100/214]	Time 0.802s (0.899s)	Speed 39.9 samples/s	Data 0.001s (0.128s)	Loss 0.00012 (0.00017)	Accuracy 0.958 (0.939)
+2023-01-14 20:32:20,456 Epoch: [149][200/214]	Time 0.785s (0.847s)	Speed 40.8 samples/s	Data 0.000s (0.072s)	Loss 0.00016 (0.00017)	Accuracy 0.942 (0.941)
+2023-01-14 20:32:43,703 Test: [0/54]	Time 11.544 (11.544)	Loss 0.0000 (0.0000)	Accuracy 0.000 (0.000)
+2023-01-14 20:33:09,361 | Arch | Head | Shoulder | Elbow | Wrist | Hip | Knee | Ankle | Mouth | Tail | Mean |
+2023-01-14 20:33:09,362 |---|---|---|---|---|---|---|---|---|---|---|
+2023-01-14 20:33:09,362 | pose_hrnet | 91.990 | 87.211 | 79.689 | 81.739 | 93.904 | 89.875 | 87.737 | 96.065 | 89.030 | 89.925 |
+2023-01-14 20:33:09,365 => saving checkpoint to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak
+2023-01-14 20:33:10,929 => saving final model state to output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak\final_state.pth

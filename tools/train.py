@@ -20,7 +20,7 @@ import torch.optim
 import torch.utils.data
 import torch.utils.data.distributed
 import torchvision.transforms as transforms
-from tensorboardX import SummaryWriter
+# from tensorboardX import SummaryWriter
 
 import _init_paths
 from config import cfg
@@ -35,6 +35,10 @@ from utils.utils import get_model_summary
 
 import dataset
 import models
+
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cpu')
 
 
 def parse_args():
@@ -99,40 +103,45 @@ def main():
         final_output_dir)
     # logger.info(pprint.pformat(model))
 
-    writer_dict = {
-        'writer': SummaryWriter(log_dir=tb_log_dir),
-        'train_global_steps': 0,
-        'valid_global_steps': 0,
-    }
+    # writer_dict = {
+    #     'writer': SummaryWriter(log_dir=tb_log_dir),
+    #     'train_global_steps': 0,
+    #     'valid_global_steps': 0,
+    # }
 
     dump_input = torch.rand(
         (1, 3, cfg.MODEL.IMAGE_SIZE[1], cfg.MODEL.IMAGE_SIZE[0])
     )
-    writer_dict['writer'].add_graph(model, (dump_input, ))
+    # writer_dict['writer'].add_graph(model, (dump_input, ))
 
     logger.info(get_model_summary(model, dump_input))
 
-    model = torch.nn.DataParallel(model, device_ids=cfg.GPUS).cuda()
+    if device.type == "cuda":
+        model = torch.nn.DataParallel(model, device_ids=cfg.GPUS).to(device)
+    else:
+        model = model.to(device)
 
     # define loss function (criterion) and optimizer
     criterion = JointsMSELoss(
         use_target_weight=cfg.LOSS.USE_TARGET_WEIGHT
-    ).cuda()
+    ).to(device)
 
     # Data loading code
     normalize = transforms.Normalize(
         mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
     )
     train_dataset = eval('dataset.'+cfg.DATASET.DATASET)(
-        cfg, cfg.DATASET.ROOT, cfg.DATASET.TRAIN_SET, True,
-        transforms.Compose([
+        cfg, cfg.DATASET.ROOT, cfg.DATASET.TRAIN_SET, True, 
+        img_root=cfg.DATASET.IMAGE_ROOT, 
+        transform=transforms.Compose([
             transforms.ToTensor(),
             normalize,
         ])
     )
     valid_dataset = eval('dataset.'+cfg.DATASET.DATASET)(
         cfg, cfg.DATASET.ROOT, cfg.DATASET.TEST_SET, False,
-        transforms.Compose([
+        img_root=cfg.DATASET.IMAGE_ROOT, 
+        transform=transforms.Compose([
             transforms.ToTensor(),
             normalize,
         ])
@@ -183,15 +192,13 @@ def main():
         lr_scheduler.step()
 
         # train for one epoch
-        train(cfg, train_loader, model, criterion, optimizer, epoch,
-              final_output_dir, tb_log_dir, writer_dict)
+        # train(cfg, train_loader, model, criterion, optimizer, epoch, final_output_dir, tb_log_dir, writer_dict)
+        train(cfg, train_loader, model, criterion, optimizer, epoch, final_output_dir, tb_log_dir, device=device)
 
 
         # evaluate on validation set
-        perf_indicator = validate(
-            cfg, valid_loader, valid_dataset, model, criterion,
-            final_output_dir, tb_log_dir, writer_dict
-        )
+        # perf_indicator = validate(cfg, valid_loader, valid_dataset, model, criterion, final_output_dir, tb_log_dir, writer_dict)
+        perf_indicator = validate(cfg, valid_loader, valid_dataset, model, criterion, final_output_dir, tb_log_dir, device=device)
 
         if perf_indicator >= best_perf:
             best_perf = perf_indicator
@@ -216,7 +223,7 @@ def main():
         final_model_state_file)
     )
     torch.save(model.module.state_dict(), final_model_state_file)
-    writer_dict['writer'].close()
+    # writer_dict['writer'].close()
 
 
 if __name__ == '__main__':
