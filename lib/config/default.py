@@ -138,6 +138,15 @@ def update_config(cfg, args):
     if args.dataDir:
         cfg.DATA_DIR = args.dataDir
 
+    if args.model_file:
+        cfg.TEST.MODEL_FILE = args.model_file
+
+    if hasattr(args, "save_batch_images_gt"):
+        cfg.DEBUG.SAVE_BATCH_IMAGES_GT = args.save_batch_images_gt
+
+    if hasattr(args, "save_heatmaps_gt"):
+        cfg.DEBUG.SAVE_HEATMAPS_GT = args.save_heatmaps_gt
+
     cfg.DATASET.ROOT = os.path.join(
         cfg.DATA_DIR, cfg.DATASET.ROOT
     )
@@ -146,10 +155,10 @@ def update_config(cfg, args):
         cfg.DATA_DIR, cfg.MODEL.PRETRAINED
     )
 
-    if cfg.TEST.MODEL_FILE:
-        cfg.TEST.MODEL_FILE = os.path.join(
-            cfg.DATA_DIR, cfg.TEST.MODEL_FILE
-        )
+    # if cfg.TEST.MODEL_FILE:
+    #     cfg.TEST.MODEL_FILE = os.path.join(
+    #         cfg.DATA_DIR, cfg.TEST.MODEL_FILE
+    #     )
 
     cfg.freeze()
 

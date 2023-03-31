@@ -18,7 +18,7 @@ import torch
 from core.evaluate import accuracy
 from core.inference import get_final_preds
 from utils.transforms import flip_back
-from utils.vis import save_debug_images
+from utils.vis import save_batch_image_with_joints_separately, save_debug_images
 
 
 logger = logging.getLogger(__name__)
@@ -35,12 +35,12 @@ def train(config, train_loader, model, criterion, optimizer, epoch,
     model.train()
 
     end = time.time()
-    for i, (input, target, target_weight, meta) in enumerate(train_loader):
+    for i, (image, target, target_weight, meta) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
 
         # compute output
-        outputs = model(input)
+        outputs = model(image)
 
         target = target.to(device, non_blocking=True)
         target_weight = target_weight.to(device, non_blocking=True)
@@ -61,7 +61,7 @@ def train(config, train_loader, model, criterion, optimizer, epoch,
         optimizer.step()
 
         # measure accuracy and record loss
-        losses.update(loss.item(), input.size(0))
+        losses.update(loss.item(), image.size(0))
 
         _, avg_acc, cnt, pred = accuracy(output.detach().cpu().numpy(),
                                          target.detach().cpu().numpy())
@@ -79,7 +79,7 @@ def train(config, train_loader, model, criterion, optimizer, epoch,
                   'Loss {loss.val:.5f} ({loss.avg:.5f})\t' \
                   'Accuracy {acc.val:.3f} ({acc.avg:.3f})'.format(
                       epoch, i, len(train_loader), batch_time=batch_time,
-                      speed=input.size(0)/batch_time.val,
+                      speed=image.size(0)/batch_time.val,
                       data_time=data_time, loss=losses, acc=acc)
             logger.info(msg)
 
@@ -91,7 +91,7 @@ def train(config, train_loader, model, criterion, optimizer, epoch,
                 writer_dict['train_global_steps'] = global_steps + 1
 
             prefix = '{}_{}'.format(os.path.join(output_dir, 'train'), i)
-            save_debug_images(config, input, meta, target, pred*4, output,
+            save_debug_images(config, image, meta, target, pred*4, output,
                               prefix)
 
 
@@ -116,16 +116,16 @@ def validate(config, val_loader, val_dataset, model, criterion, output_dir,
     idx = 0
     with torch.no_grad():
         end = time.time()
-        for i, (input, target, target_weight, meta) in enumerate(val_loader):
+        for i, (image, target, target_weight, meta) in enumerate(val_loader):
             # compute output
-            outputs = model(input)
+            outputs = model(image)
             if isinstance(outputs, list):
                 output = outputs[-1]
             else:
                 output = outputs
 
             if config.TEST.FLIP_TEST:
-                input_flipped = input.flip(3)
+                input_flipped = image.flip(3)
                 outputs_flipped = model(input_flipped)
 
                 if isinstance(outputs_flipped, list):
@@ -150,7 +150,7 @@ def validate(config, val_loader, val_dataset, model, criterion, output_dir,
 
             loss = criterion(output, target, target_weight)
 
-            num_images = input.size(0)
+            num_images = image.size(0)
             # measure accuracy and record loss
             losses.update(loss.item(), num_images)
             _, avg_acc, cnt, pred = accuracy(output.cpu().numpy(),
@@ -192,7 +192,7 @@ def validate(config, val_loader, val_dataset, model, criterion, output_dir,
                 prefix = '{}_{}'.format(
                     os.path.join(output_dir, 'val'), i
                 )
-                save_debug_images(config, input, meta, target, pred*4, output,
+                save_debug_images(config, image, meta, target, pred*4, output,
                                   prefix)
 
         name_values, perf_indicator = val_dataset.evaluate(
@@ -236,6 +236,80 @@ def validate(config, val_loader, val_dataset, model, criterion, output_dir,
             writer_dict['valid_global_steps'] = global_steps + 1
 
     return perf_indicator
+
+
+def inference(config, val_loader, val_dataset, model, output_dir, device, save_dir):
+    batch_time = AverageMeter()
+
+    # switch to evaluate mode
+    model.eval()
+
+    num_samples = len(val_dataset)
+    all_preds = np.zeros(
+        (num_samples, config.MODEL.NUM_JOINTS, 3),
+        dtype=np.float32
+    )
+    image_path = []
+    idx = 0
+    with torch.no_grad():
+        end = time.time()
+        for i, (image, meta) in enumerate(val_loader):
+            outputs = model(image)
+            if isinstance(outputs, list):
+                output = outputs[-1]
+            else:
+                output = outputs
+
+            if config.TEST.FLIP_TEST:
+                input_flipped = image.flip(3)
+                outputs_flipped = model(input_flipped)
+
+                if isinstance(outputs_flipped, list):
+                    output_flipped = outputs_flipped[-1]
+                else:
+                    output_flipped = outputs_flipped
+
+                output_flipped = flip_back(output_flipped.cpu().numpy(),
+                                           val_dataset.flip_pairs)
+                output_flipped = torch.from_numpy(output_flipped.copy()).to(device)
+
+
+                # feature is not aligned, shift flipped heatmap for higher accuracy
+                if config.TEST.SHIFT_HEATMAP:
+                    output_flipped[:, :, :, 1:] = \
+                        output_flipped.clone()[:, :, :, 0:-1]
+
+                output = (output + output_flipped) * 0.5
+
+            num_images = image.size(0)
+
+            # measure elapsed time
+            batch_time.update(time.time() - end)
+            end = time.time()
+
+            preds, maxvals = get_final_preds(
+                config, output.clone().cpu().numpy(), center=None, scale=None)
+
+            all_preds[idx:idx + num_images, :, 0:2] = preds[:, :, 0:2]
+            all_preds[idx:idx + num_images, :, 2:3] = maxvals
+            image_path.extend(meta['image_path'])
+
+
+            if i % config.PRINT_FREQ == 0:
+                msg = 'Test: [{0}/{1}]\t' \
+                      'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'.format(
+                          i, len(val_loader), batch_time=batch_time)
+                logger.info(msg)
+                prefix = '{}_{}'.format(os.path.join(output_dir, 'inference'), i)
+                save_debug_images(config, image, meta, None, preds*4, output, prefix)
+            
+            ### render predicted joints  # 此部分放到主函数更好
+            save_batch_image_with_joints_separately(image, preds*4, save_dir, idx, maxvals)
+            
+            idx += num_images
+
+        return all_preds  # TODO 由主函数解析并做可视化
+
 
 
 # markdown format output

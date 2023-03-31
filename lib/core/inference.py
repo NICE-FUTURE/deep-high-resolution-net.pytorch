@@ -71,9 +71,10 @@ def get_final_preds(config, batch_heatmaps, center, scale):
     preds = coords.copy()
 
     # Transform back
-    for i in range(coords.shape[0]):
-        preds[i] = transform_preds(
-            coords[i], center[i], scale[i], [heatmap_width, heatmap_height]
-        )
+    if center and scale:
+        for i in range(coords.shape[0]):
+            preds[i] = transform_preds(
+                coords[i], center[i], scale[i], [heatmap_width, heatmap_height]
+            )
 
     return preds, maxvals

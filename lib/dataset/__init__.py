@@ -11,3 +11,4 @@ from __future__ import print_function
 # from .mpii import MPIIDataset as mpii
 # from .coco import COCODataset as coco
 from .ak import AnimalKingdomDataset as ak
+from .ak import AnimalKingdomDatasetInference as akinference

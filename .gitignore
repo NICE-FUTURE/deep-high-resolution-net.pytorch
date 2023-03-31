@@ -139,3 +139,5 @@ cython_debug/
 
 *.pth
 *.pt
+extracted_frames/
+predicted_frames/

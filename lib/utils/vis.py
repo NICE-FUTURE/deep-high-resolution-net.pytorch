@@ -9,10 +9,12 @@ from __future__ import division
 from __future__ import print_function
 
 import math
+import os
 
 import numpy as np
 import torchvision
 import cv2
+from PIL import Image
 
 from core.inference import get_max_preds
 
@@ -49,6 +51,30 @@ def save_batch_image_with_joints(batch_image, batch_joints, batch_joints_vis,
                     cv2.circle(ndarr, (int(joint[0]), int(joint[1])), 2, [255, 0, 0], 2)
             k = k + 1
     cv2.imwrite(file_name, ndarr)
+
+
+def save_batch_image_with_joints_separately(batch_image, batch_joints, save_dir, start_idx, scores):
+    '''
+    batch_image: [batch_size, channel, height, width]
+    batch_joints: [batch_size, num_joints, 3],
+    '''
+    threshold = 0.0
+    ndarr = batch_image.permute(0, 2, 3, 1).cpu().numpy()  # BHWC
+    B, H, W, C = ndarr.shape
+    ndarr = ndarr.reshape((B, -1, C))
+    minimum, maximum = np.min(ndarr, axis=1, keepdims=True), np.max(ndarr, axis=1, keepdims=True)
+    ndarr = ((ndarr-minimum) / (maximum-minimum) * 255).astype(np.uint8)
+    ndarr = ndarr.reshape((B, H, W, C))
+    ndarr = ndarr.copy()
+
+    for i in range(B):
+        joints = batch_joints[i]
+        for j, joint in enumerate(joints):
+            if scores[i][j] >= threshold:
+                cv2.circle(ndarr[i], (int(joint[0]), int(joint[1])), 2, [255, 0, 0], 2)
+                cv2.putText(ndarr[i], "{}".format(round(scores[i][j].item(), 2)), (int(joint[0])+5, int(joint[1])+5), cv2.FONT_HERSHEY_SIMPLEX, 0.3, color=[255,0,0])
+        save_image = cv2.resize(ndarr[i], (1024, 1024), interpolation=cv2.INTER_LINEAR)
+        cv2.imwrite(os.path.join(save_dir, "{}.png".format(start_idx+i)), save_image)
 
 
 def save_batch_heatmaps(batch_image, batch_heatmaps, file_name,

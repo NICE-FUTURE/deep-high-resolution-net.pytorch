@@ -1,0 +1,107 @@
+2023-02-01 23:44:29,860 Namespace(cfg='.\\experiments\\mpii\\hrnet\\w32_256x256_adam_lr1e-3_ak.yaml', dataDir='', logDir='', modelDir='', model_file='.\\output\\ak_P2\\ak\\pose_hrnet\\w32_256x256_adam_lr1e-3_ak\\model_best.pth', opts=[], path='C:\\Users\\huaxh\\Desktop\\test.mp4', prevModelDir='', save_batch_images_gt=False, save_heatmaps_gt=False)
+2023-02-01 23:44:29,861 AUTO_RESUME: True
+CUDNN:
+  BENCHMARK: True
+  DETERMINISTIC: False
+  ENABLED: True
+DATASET:
+  COLOR_RGB: True
+  DATASET: ak
+  DATA_FORMAT: jpg
+  FLIP: True
+  HYBRID_JOINTS_TYPE: 
+  IMAGE_ROOT: E:/huazhen/dataset/AnimalKingdom-PoseEstimation/dataset/
+  NUM_JOINTS_HALF_BODY: 11
+  PROB_HALF_BODY: -1.0
+  ROOT: data/ak_P2
+  ROT_FACTOR: 30
+  SCALE_FACTOR: 0.25
+  SELECT_DATA: False
+  TEST_SET: test
+  TRAIN_SET: train
+DATA_DIR: 
+DEBUG:
+  DEBUG: True
+  SAVE_BATCH_IMAGES_GT: False
+  SAVE_BATCH_IMAGES_PRED: True
+  SAVE_HEATMAPS_GT: False
+  SAVE_HEATMAPS_PRED: True
+GPUS: (0,)
+LOG_DIR: log/ak_P2
+LOSS:
+  TOPK: 8
+  USE_DIFFERENT_JOINTS_WEIGHT: False
+  USE_OHKM: False
+  USE_TARGET_WEIGHT: True
+MODEL:
+  EXTRA:
+    FINAL_CONV_KERNEL: 1
+    PRETRAINED_LAYERS: ['conv1', 'bn1', 'conv2', 'bn2', 'layer1', 'transition1', 'stage2', 'transition2', 'stage3', 'transition3', 'stage4']
+    STAGE2:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4]
+      NUM_BRANCHES: 2
+      NUM_CHANNELS: [32, 64]
+      NUM_MODULES: 1
+    STAGE3:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4]
+      NUM_BRANCHES: 3
+      NUM_CHANNELS: [32, 64, 128]
+      NUM_MODULES: 4
+    STAGE4:
+      BLOCK: BASIC
+      FUSE_METHOD: SUM
+      NUM_BLOCKS: [4, 4, 4, 4]
+      NUM_BRANCHES: 4
+      NUM_CHANNELS: [32, 64, 128, 256]
+      NUM_MODULES: 3
+  HEATMAP_SIZE: [64, 64]
+  IMAGE_SIZE: [256, 256]
+  INIT_WEIGHTS: True
+  NAME: pose_hrnet
+  NUM_JOINTS: 23
+  PRETRAINED: 
+  SIGMA: 2
+  TAG_PER_JOINT: True
+  TARGET_TYPE: gaussian
+OUTPUT_DIR: output/ak_P2
+PIN_MEMORY: True
+PRINT_FREQ: 100
+RANK: 0
+TEST:
+  BATCH_SIZE_PER_GPU: 32
+  BBOX_THRE: 1.0
+  COCO_BBOX_FILE: 
+  FLIP_TEST: True
+  IMAGE_THRE: 0.1
+  IN_VIS_THRE: 0.0
+  MODEL_FILE: .\output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak\model_best.pth
+  NMS_THRE: 0.6
+  OKS_THRE: 0.5
+  POST_PROCESS: True
+  SHIFT_HEATMAP: True
+  SOFT_NMS: False
+  USE_GT_BBOX: False
+TRAIN:
+  BATCH_SIZE_PER_GPU: 32
+  BEGIN_EPOCH: 0
+  CHECKPOINT: 
+  END_EPOCH: 150
+  GAMMA1: 0.99
+  GAMMA2: 0.0
+  LR: 0.001
+  LR_FACTOR: 0.1
+  LR_STEP: [170, 200]
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPTIMIZER: adam
+  RESUME: False
+  SHUFFLE: True
+  WD: 0.0001
+WORKERS: 4
+2023-02-01 23:44:30,034 => loading model from .\output\ak_P2\ak\pose_hrnet\w32_256x256_adam_lr1e-3_ak\model_best.pth
+2023-02-01 23:44:32,291 load video: C:\Users\huaxh\Desktop\test.mp4
+2023-02-01 23:44:50,101 Test: [0/5]	Time 17.768 (17.768)	

@@ -14,9 +14,12 @@ import json_tricks as json
 from collections import OrderedDict
 import json
 import numpy as np
+import cv2
+from pathlib import Path
 from scipy.io import loadmat, savemat
 
 from dataset.JointsDataset import JointsDataset
+from utils.transforms import get_affine_transform
 
 
 logger = logging.getLogger(__name__)
@@ -127,8 +130,8 @@ class AnimalKingdomDataset(JointsDataset):
             pred_file = os.path.join(output_dir, 'pred.mat')
             savemat(pred_file, mdict={'preds': preds})
 
-#         if 'test' in cfg.DATASET.TEST_SET:
-#             return {'Null': 0.0}, 0.0
+        # if 'test' in cfg.DATASET.TEST_SET:
+        #     return {'Null': 0.0}, 0.0
 
         SC_BIAS = 1
         threshold = 0.1
@@ -261,8 +264,8 @@ class AnimalKingdomDataset(JointsDataset):
 
         uv_err = np.linalg.norm(uv_error, axis=1)
 
-#         headsizes = headboxes_src[1, :, :] - headboxes_src[0, :, :]
-#         headsizes = np.linalg.norm(headsizes, axis=0)
+        # headsizes = headboxes_src[1, :, :] - headboxes_src[0, :, :]
+        # headsizes = np.linalg.norm(headsizes, axis=0)
         scale *= SC_BIAS
         headsizes=scale
 
@@ -286,11 +289,11 @@ class AnimalKingdomDataset(JointsDataset):
             pckAll[r, :] = np.divide(100.*np.sum(less_than_threshold, axis=1),
                                      jnt_count)
 
-#         PCKh = np.ma.array(PCKh, mask=False)
-#         PCKh.mask[21:22] = True
+        # PCKh = np.ma.array(PCKh, mask=False)
+        # PCKh.mask[21:22] = True
 
-#         jnt_count = np.ma.array(jnt_count, mask=False)
-#         jnt_count.mask[21:22] = True
+        # jnt_count = np.ma.array(jnt_count, mask=False)
+        # jnt_count.mask[21:22] = True
 
         jnt_ratio = jnt_count / np.sum(jnt_count).astype(np.float64)
         name_value = [
@@ -304,7 +307,79 @@ class AnimalKingdomDataset(JointsDataset):
             ('Mouth', 0.25 * (PCKh[tmouth] + PCKh[lmouth]+ PCKh[rmouth]+ PCKh[bmouth])),
             ('Tail', (PCKh[ttail] + PCKh[mtail]+ PCKh[btail])/3),
             ('Mean', np.sum(PCKh * jnt_ratio))
-#             ('Mean@0.1', np.sum(pckAll[11, :] * jnt_ratio))
+            # ('Mean@0.1', np.sum(pckAll[11, :] * jnt_ratio))
         ]
         name_value = OrderedDict(name_value)
         return name_value, name_value['Mean']
+
+
+class AnimalKingdomDatasetInference(object):
+
+    def __init__(self, cfg, video_path, transform=None, frame_root="extracted_frames"):
+        self.num_joints = 23
+        self.flip_pairs = [[1, 2], [4, 5], [7, 8], [9, 10], [11, 12], [14,15], [16,17], [18,19]]
+        self.video_path = video_path
+        self.color_rgb = cfg.DATASET.COLOR_RGB
+        self.transform = transform
+        self.frame_root = frame_root
+        self.frame_dir = os.path.join(self.frame_root, Path(self.video_path).stem)
+        self.db = self._get_db()
+
+    def _get_db(self):
+        """ extract frames from mp4 video file
+        """
+        db = []
+        logger.info("load video: {}".format(self.video_path))
+        cap = cv2.VideoCapture(self.video_path)
+        frame_total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+        if os.path.exists(self.frame_dir) and len(os.listdir(self.frame_dir)) == frame_total:
+            for frame_idx, filename in enumerate(os.listdir(self.frame_dir)):
+                print("find frames: {}/{}".format(frame_idx+1, frame_total), end="\r")
+                db.append({
+                    'image_path': os.path.join(self.frame_dir, filename),
+                    "image_name": filename
+                })
+            print("find frames: {}/{}".format(frame_idx+1, frame_total))
+        else:
+            os.makedirs(self.frame_dir, exist_ok=True)
+            frame_idx = 0
+            while cap.isOpened():
+                ok, frame = cap.read()  # BGR
+                if not ok:
+                    break
+                print("extract frames: {}/{}".format(frame_idx+1, frame_total), end="\r")
+                frame_path = os.path.join(self.frame_dir, "{}.png".format(frame_idx))
+                cv2.imwrite(frame_path, frame)
+                db.append({
+                    'image_path': frame_path,
+                    "image_name": "{}.png".format(frame_idx)
+                })
+                frame_idx += 1
+            print("extract frames: {}/{}".format(frame_idx+1, frame_total))
+        return db
+
+    def __len__(self,):
+        return len(self.db)
+
+    def __getitem__(self, idx):
+
+        image_path, image_name = self.db[idx]['image_path'], self.db[idx]['image_name']
+
+        data_numpy = cv2.imread(image_path, cv2.IMREAD_COLOR | cv2.IMREAD_IGNORE_ORIENTATION)
+        if self.color_rgb:
+            data_numpy = cv2.cvtColor(data_numpy, cv2.COLOR_BGR2RGB)
+        if data_numpy is None:
+            logger.error('=> fail to read {}'.format(image_path))
+            raise ValueError('Fail to read {}'.format(image_path))
+
+        if self.transform:
+            image = self.transform(data_numpy)
+
+        meta = {
+            'image_path': image_path,
+            'image_name': image_name,
+            "joints_vis": np.ones((self.num_joints, 1))
+        }
+
+        return image, meta
